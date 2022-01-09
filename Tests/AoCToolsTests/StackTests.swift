@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AoCTools
+import AoCTools
 
 class StackTests: XCTestCase {
     func testStack() throws {

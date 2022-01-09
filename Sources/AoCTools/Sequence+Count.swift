@@ -6,11 +6,9 @@
 //
 
 extension Sequence {
-    func count(where condition: (Element) -> Bool) -> Int {
-        var cnt = 0
-        self.forEach {
-            if condition($0) { cnt += 1 }
+    public func count(where condition: (Element) -> Bool) -> Int {
+        reduce(0) {
+            $0 + (condition($1) ? 1 : 0)
         }
-        return cnt
     }
 }

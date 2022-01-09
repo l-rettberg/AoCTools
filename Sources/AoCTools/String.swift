@@ -7,20 +7,20 @@
 import Foundation
 
 extension String {
-    func trimmed() -> String {
+    public func trimmed() -> String {
         trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
-    mutating func trim() {
+    public mutating func trim() {
         self = self.trimmed()
     }
 
-    func charAt(_ offset: Int) -> String {
+    public func charAt(_ offset: Int) -> String {
         let ch = self[index(startIndex, offsetBy: offset)]
         return String(ch)
     }
 
-    func indexOf(_ substr: String) -> Int? {
+    public func indexOf(_ substr: String) -> Int? {
         guard let range = self.range(of: substr) else {
             return nil
         }
@@ -28,7 +28,7 @@ extension String {
         return distance(from: startIndex, to: range.lowerBound)
     }
 
-    func indicesOf(_ substr: String) -> [Int] {
+    public func indicesOf(_ substr: String) -> [Int] {
         var result = [Int]()
         var searchRange = startIndex..<endIndex
         while let r = self.range(of: substr, range: searchRange) {

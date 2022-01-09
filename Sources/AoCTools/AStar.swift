@@ -7,7 +7,7 @@
 //  https://github.com/davecom/SwiftPriorityQueue/blob/master/SwiftPriorityQueue/astar.swift
 //
 
-protocol Pathfinding {
+public protocol Pathfinding {
     associatedtype Coordinate
     associatedtype CostType
 
@@ -19,9 +19,9 @@ protocol Pathfinding {
 
 // MARK: - implementation
 
-final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashable, PF.CostType: Numeric & Comparable {
-    typealias Coord = PF.Coordinate
-    typealias Cost = PF.CostType
+public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashable, PF.CostType: Numeric & Comparable {
+    public typealias Coord = PF.Coordinate
+    public typealias Cost = PF.CostType
 
     private final class PathNode: Hashable, Comparable, CustomDebugStringConvertible {
         let coordinate: Coord
@@ -57,11 +57,11 @@ final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashable, PF.C
 
     private let grid: PF
 
-    init(grid: PF) {
+    public init(grid: PF) {
         self.grid = grid
     }
 
-    func shortestPathFrom(_ start: Coord, to destination: Coord) -> [Coord] {
+    public func shortestPathFrom(_ start: Coord, to destination: Coord) -> [Coord] {
         var frontier = Heap<PathNode>.minHeap()
         frontier.insert(PathNode(coordinate: start))
 

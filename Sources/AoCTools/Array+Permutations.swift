@@ -13,7 +13,7 @@ extension Array {
     /// for example, given the array `[1,2,3]`, closure will be called with these values:
     /// `[1,2,3]`, `[1,3,2]`, `[2,1,3]`, `[2,3,1]`, `[3,2,1]`, `[3,1,2]`
     /// - Parameter closure: called with each permutation
-    func permutations(closure: ([Element]) -> Void) {
+    public func permutations(closure: ([Element]) -> Void) {
         var data = self
         generate(n: data.count, data: &data, closure: closure)
     }

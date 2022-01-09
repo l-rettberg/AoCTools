@@ -1,174 +1,97 @@
 //
-// Heap.swift
+//  Heap.swift
 //
-// based on https://gist.github.com/AquaGeek/34b7511d794223c24340f0f399fc8ad0
+//  Advent of Code Tools
+//
+//  based on https://www.raywenderlich.com/586-swift-algorithm-club-heap-and-priority-queue-data-structure
 //
 
-public struct Heap<Element> {
-    public typealias Index = Int
-
-    private var storage: [Element]
+public struct Heap<Element> where Element: Comparable {
+    private var elements: [Element]
     private let comparator: (Element, Element) -> Bool
 
-    public var count: Int {
-        storage.count
-    }
+    public static func minHeap() -> Heap { Heap(comparator: <) }
+    public static func maxHeap() -> Heap { Heap(comparator: >) }
 
-    public var isEmpty: Bool {
-        storage.isEmpty
+    public init<S: Sequence>(elements: S,
+                             comparator: @escaping (Element, Element) -> Bool) where S.Element == Element {
+        self.init(comparator: comparator)
+        elements.forEach {
+            insert($0)
+        }
     }
 
     public init(comparator: @escaping (Element, Element) -> Bool) {
-        self.storage = []
+        self.elements = []
         self.comparator = comparator
     }
 
-    /// Inserts the given element into the `BinaryHeap`.
-    ///
-    /// - Complexity: O(log n)
+    public var isEmpty: Bool { elements.isEmpty }
+
+    public var count: Int { elements.count }
+
+    public func peek() -> Element? { elements.first }
+
     public mutating func insert(_ element: Element) {
-        storage.append(element)
-        siftUp(startingAt: lastStorageIndex)
+        elements.append(element)
+        siftUp(elementAtIndex: count - 1)
     }
 
-    /// Returns the first element in the `BinaryHeap`.
-    ///
-    /// - Complexity: O(1)
-    public func peek() -> Element? {
-        storage.first
-    }
-
-    /// Removes and returns the first element from the `BinaryHeap`.
-    ///
-    /// - Complexity: O(log n)
     public mutating func pop() -> Element? {
-        deleteElement(at: 0)
-    }
-
-    // MARK: - Internals
-    /// Remove the item at the given index
-    ///
-    /// - Complexity: O(log n)
-    private mutating func deleteElement(at index: Index) -> Element? {
-        guard storage.count > index else {
+        guard !isEmpty else {
             return nil
         }
 
-        guard storage.count > 1 else {
-            // The element to remove is the only one we have
-            return storage.removeLast()
+        elements.swapAt(0, count - 1)
+        let element = elements.removeLast()
+        if !isEmpty {
+            siftDown(elementAtIndex: 0)
+        }
+        return element
+    }
+
+    private mutating func siftUp(elementAtIndex index: Int) {
+        let parent = parentIndex(of: index)
+        guard index > 0, comparator(elements[index], elements[parent]) else {
+            return
         }
 
-        storage.swapAt(index, lastStorageIndex)
-        let removed = storage.removeLast()
-
-        siftDown(startingAt: index)
-
-        return removed
+        elements.swapAt(index, parent)
+        siftUp(elementAtIndex: parent)
     }
 
-    private mutating func siftUp(startingAt startIndex: Index) {
-        var idx = startIndex
-
-        // 1. Compare the element at idx to its parent.
-        // 2. If they are not in the correct order:
-        //    * Swap them
-        //    * Go back to 1
-        while idx > 0 && comparator(storage[idx], storage[parentIndex(of: idx)]) {
-            let parentIdx = parentIndex(of: idx)
-            storage.swapAt(idx, parentIdx)
-            idx = parentIdx
+    private mutating func siftDown(elementAtIndex index: Int) {
+        let childIndex = highestPriorityIndex(for: index)
+        if index == childIndex {
+            return
         }
+
+        elements.swapAt(index, childIndex)
+        siftDown(elementAtIndex: childIndex)
     }
 
-    private mutating func siftDown(startingAt startIndex: Index) {
-        var idx = startIndex
+    private func leftChildIndex(of index: Int) -> Int {
+        (2 * index) + 1
+    }
 
-        // 1. Compare the element at idx with its children.
-        // 2. If they are not in the correct order:
-        //    * Swap the parent with its children based on the comparator
-        //    * Go back to 1
-        while idx < lastStorageIndex {
-            let leftIdx = leftChildIndex(of: idx)
-            let rightIdx = rightChildIndex(of: idx)
+    private func rightChildIndex(of index: Int) -> Int {
+        return (2 * index) + 2
+    }
 
-            guard leftIdx < storage.count, rightIdx < storage.count else {
-                break
-            }
+    private func parentIndex(of index: Int) -> Int {
+        return (index - 1) / 2
+    }
 
-            let leftChild = storage[leftIdx]
-            let rightChild = storage[rightIdx]
-
-            guard comparator(leftChild, storage[idx]) || comparator(rightChild, storage[idx]) else {
-                // The heap is already in the correct order
-                break
-            }
-
-            if comparator(leftChild, rightChild) {
-                storage.swapAt(idx, leftIdx)
-                idx = leftIdx
-            } else {
-                storage.swapAt(idx, rightIdx)
-                idx = rightIdx
-            }
+    private func highestPriorityIndex(of parentIndex: Int, and childIndex: Int) -> Int {
+        guard childIndex < count, comparator(elements[childIndex], elements[parentIndex]) else {
+            return parentIndex
         }
+
+        return childIndex
     }
 
-    // MARK: Index Helpers
-    private var lastStorageIndex: Index {
-        storage.endIndex - 1
-    }
-
-    private func parentIndex(of index: Index) -> Index {
-        (index - 1) / 2
-    }
-
-    private func leftChildIndex(of index: Index) -> Index {
-        index * 2 + 1
-    }
-
-    private func rightChildIndex(of index: Index) -> Index {
-        index * 2 + 2
-    }
-}
-
-// MARK: -
-extension Heap {
-    public init<Value>(keyPath: KeyPath<Element, Value>, comparator: @escaping (Value, Value) -> Bool) {
-        self.init { lhs, rhs in
-            comparator(lhs[keyPath: keyPath], rhs[keyPath: keyPath])
-        }
-    }
-}
-
-extension Heap where Element: Comparable {
-    public static func minHeap(withContentsOf elements: [Element]? = nil) -> Self {
-        var heap = self.init(comparator: <)
-        if let elements = elements {
-            elements.forEach { heap.insert($0) }
-        }
-        return heap
-    }
-
-    public static func maxHeap(withContentsOf elements: [Element]? = nil) -> Self {
-        var heap = self.init(comparator: >)
-        if let elements = elements {
-            elements.forEach { heap.insert($0) }
-        }
-        return heap
-    }
-}
-
-extension Heap where Element: Equatable {
-    public func firstIndex(of element: Element) -> Int? {
-        storage.firstIndex(of: element)
-    }
-
-    public subscript(_ index: Index) -> Element {
-        storage[index]
-    }
-
-    public mutating func delete(at index: Index) -> Element? {
-        deleteElement(at: index)
+    private func highestPriorityIndex(for parent: Int) -> Int {
+        highestPriorityIndex(of: highestPriorityIndex(of: parent, and: leftChildIndex(of: parent)),
+                             and: rightChildIndex(of: parent))
     }
 }

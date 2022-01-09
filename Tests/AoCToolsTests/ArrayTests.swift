@@ -1,5 +1,5 @@
 import XCTest
-@testable import AoCTools
+import AoCTools
 
 final class ArrayTests: XCTestCase {
     func testPermutations() throws {
