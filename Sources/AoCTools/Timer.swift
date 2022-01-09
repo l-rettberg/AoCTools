@@ -6,7 +6,7 @@
 
 import Foundation
 
-final class Timer {
+public final class Timer {
     private let start = Date().timeIntervalSinceReferenceDate
     private let name: String
 
@@ -18,23 +18,23 @@ final class Timer {
         return fmt
     }()
 
-    init(_ day: String, fun: String = #function) {
+    public init(_ day: String, fun: String = #function) {
         self.name = "Day \(day) \(fun)"
     }
 
-    static func time<Result>(_ day: String, name: String = "parse", closure: () -> Result) -> Result {
+    public static func time<Result>(_ day: String, name: String = "parse", closure: () -> Result) -> Result {
         let timer = Timer(day, fun: name)
         defer { timer.show() }
         return closure()
     }
 
-    func show() {
+    public func show() {
         let elapsed = Date().timeIntervalSinceReferenceDate - start
         Self.total += elapsed
         print("\(name) took \(Self.formatted(elapsed))")
     }
 
-    static func showTotal() {
+    public static func showTotal() {
         print("Total time: \(formatted(Self.total))")
     }
 
