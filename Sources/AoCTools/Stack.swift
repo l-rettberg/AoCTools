@@ -1,7 +1,7 @@
 //
 //  Stack.swift
-//  
-//  Advent of Code 2016
+//
+//  Advent of Code Tools
 //
 
 /// A simple FIFO collection of elements

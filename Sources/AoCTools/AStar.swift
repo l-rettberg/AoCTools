@@ -1,6 +1,8 @@
 //
 //  AStar.swift
 //
+//  Advent of Code Tools
+//
 //  based on
 //  https://www.raywenderlich.com/1734-how-to-implement-a-pathfinding-with-swift
 //  and

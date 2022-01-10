@@ -1,7 +1,7 @@
 //
 //  Queue.swift
 //
-//  AoCTools
+//  Advent of Code Tools
 //
 
 /// A simple LIFO collection of elements

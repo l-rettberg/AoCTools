@@ -1,7 +1,7 @@
 //
-//  Utilities.swift
+//  String.swift
 //
-//  Advent of Code 2016
+//  Advent of Code Tools
 //
 
 import Foundation

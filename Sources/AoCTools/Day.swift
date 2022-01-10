@@ -1,5 +1,7 @@
 //
-// Advent of Code 2016
+//  Day.swift
+//
+//  Advent of Code Tools
 //
 
 public class Day {
