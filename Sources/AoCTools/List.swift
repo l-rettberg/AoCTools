@@ -5,7 +5,7 @@
 //
 
 /// A doubly-linked list, adding/removing elements at start and end are O(1)
-/// Follows the usual
+/// Follows the usual copy-on-write semantics for structs
 public struct List<Element> {
     /// Return the number of element in this list
     public private(set) var count = 0

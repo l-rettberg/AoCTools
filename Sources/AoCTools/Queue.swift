@@ -31,7 +31,7 @@ public struct Queue<Element> {
     }
 
     /// Return the top element of the queue without removing it.
-    /// For an empty stack, return `nil`.
+    /// For an empty queue, return `nil`.
     public func peek() -> Element? {
         storage.first
     }
