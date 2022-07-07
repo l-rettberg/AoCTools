@@ -8,6 +8,8 @@
 public struct Point: Hashable {
     public let x, y: Int
 
+    public static let zero = Point(0, 0)
+
     public init(_ x: Int, _ y: Int) {
         self.x = x
         self.y = y
@@ -25,7 +27,7 @@ public struct Point: Hashable {
         Point(lhs.x * rhs, lhs.y * rhs)
     }
 
-    public func distance(to: Point) -> Int {
+    public func distance(to: Point = .zero) -> Int {
         abs(to.x - self.x) + abs(to.y - self.y)
     }
 }
