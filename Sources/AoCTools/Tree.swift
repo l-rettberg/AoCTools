@@ -4,9 +4,10 @@
 //  Advent of Code Tools
 //
 
-public struct TreeNode<Value> {
+public class TreeNode<Value> {
     public let value: Value
     private(set) public var children: [TreeNode]
+    private(set) public var parent: TreeNode?
 
     public var count: Int {
         1 + children.reduce(0) { $0 + $1.count }
@@ -15,10 +16,24 @@ public struct TreeNode<Value> {
     public init(_ value: Value, children: [TreeNode] = []) {
         self.value = value
         self.children = children
+        self.parent = nil
     }
 
-    public mutating func add(_ node: TreeNode) {
+    public func add(_ node: TreeNode) {
         children.append(node)
+        node.parent = self
+    }
+
+    public func delete() {
+        guard
+            let parent = self.parent,
+            let index = parent.children.firstIndex(where: { $0 === self })
+        else {
+            return
+        }
+
+        parent.children.remove(at: index)
+        self.parent = nil
     }
 
     public func visitAll(_ closure: (Value) -> Void) {
@@ -46,11 +61,47 @@ public struct TreeNode<Value> {
         }
         return result
     }
+
+    public func first(where predicate: (Value) -> Bool) -> TreeNode? {
+        if predicate(value) {
+            return self
+        }
+        for child in children {
+            if let found = child.first(where: predicate) {
+                return found
+            }
+        }
+        return nil
+    }
+
+    public func filter(where predicate: (Value) -> Bool) -> [TreeNode] {
+        var result = [TreeNode]()
+        filter(where: predicate, storeIn: &result)
+        return result
+    }
+
+    public func filter(where predicate: (Value) -> Bool, storeIn result: inout [TreeNode]) {
+        if predicate(value) {
+            result.append(self)
+        }
+        children.forEach {
+            $0.filter(where: predicate, storeIn: &result)
+        }
+    }
 }
 
-extension TreeNode: Equatable where Value: Equatable { }
+extension TreeNode: Equatable where Value: Equatable {
+    public static func == (lhs: TreeNode, rhs: TreeNode) -> Bool {
+        lhs.value == rhs.value && lhs.children == rhs.children
+    }
+}
 
-extension TreeNode: Hashable where Value: Hashable { }
+extension TreeNode: Hashable where Value: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+        hasher.combine(children)
+    }
+}
 
 extension TreeNode where Value: CustomStringConvertible {
     public func print() {
