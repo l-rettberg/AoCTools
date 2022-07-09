@@ -21,6 +21,15 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(node3.parent, node2)
     }
 
+    func testTreeNodes2() {
+        let node3 = TreeNode(3)
+        let node2 = TreeNode(2, children: [node3])
+        let node1 = TreeNode(1, children: [node2])
+        XCTAssertEqual(node1.parent, nil)
+        XCTAssertEqual(node2.parent, node1)
+        XCTAssertEqual(node3.parent, node2)
+    }
+
     func testTreeCount() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
@@ -40,24 +49,19 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         var visits = [Int]()
-        node1.visitAll { value, _ in
-            visits.append(value)
+        node1.visitAll { node, _ in
+            visits.append(node.value)
         }
         XCTAssertEqual(visits, [1,2,3])
     }
 
     func testTreeVisit2() {
-        let node1 = TreeNode(1)
-        let node2 = TreeNode(2)
-        let node3 = TreeNode(3)
-        let node4 = TreeNode(4)
-        node1.add(node2)
-        node2.add(node3)
-        node2.add(node4)
+        let node2 = TreeNode(2, children: [TreeNode(3), TreeNode(4)])
+        let node1 = TreeNode(1, children: [node2])
 
         var visits = [Int]()
-        node1.visitAll { value, level in
-            visits.append(value * level)
+        node1.visitAll { node, level in
+            visits.append(node.value * level)
         }
         XCTAssertEqual(visits, [0,2,6,8])
     }

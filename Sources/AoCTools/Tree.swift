@@ -15,8 +15,9 @@ public class TreeNode<Value> {
 
     public init(_ value: Value, children: [TreeNode] = []) {
         self.value = value
-        self.children = children
         self.parent = nil
+        self.children = children
+        children.forEach { $0.parent = self }
     }
 
     public func add(_ node: TreeNode) {
@@ -39,14 +40,14 @@ public class TreeNode<Value> {
     /// visit all nodes in the tree, depth-first
     /// - Parameters:
     ///   - closure: called for every node in the tree
-    ///   - value: the value of the node
+    ///   - node: the visited node
     ///   - level: the depth of the node (root is at 0)
-    public func visitAll(_ closure: (_ value: Value, _ level: Int) -> Void) {
+    public func visitAll(_ closure: (_ node: TreeNode, _ level: Int) -> Void) {
         visitAll(at: 0, closure)
     }
 
-    private func visitAll(at level: Int, _ closure: (Value, Int) -> Void) {
-        closure(value, level)
+    private func visitAll(at level: Int, _ closure: (TreeNode, Int) -> Void) {
+        closure(self, level)
         children.forEach { $0.visitAll(at: level + 1, closure) }
     }
 
