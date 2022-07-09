@@ -40,8 +40,8 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         var visits = [Int]()
-        node1.visitAll {
-            visits.append($0)
+        node1.visitAll { value, _ in
+            visits.append(value)
         }
         XCTAssertEqual(visits, [1,2,3])
     }
@@ -56,10 +56,10 @@ class TreeTests: XCTestCase {
         node2.add(node4)
 
         var visits = [Int]()
-        node1.visitAll {
-            visits.append($0)
+        node1.visitAll { value, level in
+            visits.append(value * level)
         }
-        XCTAssertEqual(visits, [1,2,3,4])
+        XCTAssertEqual(visits, [0,2,6,8])
     }
 
     func testTreeReduce() {

@@ -36,9 +36,18 @@ public class TreeNode<Value> {
         self.parent = nil
     }
 
-    public func visitAll(_ closure: (Value) -> Void) {
-        closure(value)
-        children.forEach { $0.visitAll(closure) }
+    /// visit all nodes in the tree, depth-first
+    /// - Parameters:
+    ///   - closure: called for every node in the tree
+    ///   - value: the value of the node
+    ///   - level: the depth of the node (root is at 0)
+    public func visitAll(_ closure: (_ value: Value, _ level: Int) -> Void) {
+        visitAll(at: 0, closure)
+    }
+
+    private func visitAll(at level: Int, _ closure: (Value, Int) -> Void) {
+        closure(value, level)
+        children.forEach { $0.visitAll(at: level + 1, closure) }
     }
 
     public func reduce<Result>(_ initialResult: Result,
