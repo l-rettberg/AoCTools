@@ -16,7 +16,7 @@ public struct Point: Hashable {
     }
 
     public func add(_ point: Point) -> Point {
-        Point(self.x + point.x, self.y + point.y)
+        Point(x + point.x, y + point.y)
     }
 
     public static func +(_ lhs: Point, _ rhs: Point) -> Point {
@@ -27,8 +27,8 @@ public struct Point: Hashable {
         Point(lhs.x * rhs, lhs.y * rhs)
     }
 
-    public func distance(to: Point = .zero) -> Int {
-        abs(to.x - self.x) + abs(to.y - self.y)
+    public func distance(to point: Point = .zero) -> Int {
+        abs(x - point.x) + abs(y - point.y)
     }
 }
 
@@ -51,18 +51,36 @@ extension Point {
         case orthogonal, diagonal, all
     }
 
-    public func neighbors(adjacency: Adjacency = .orthogonal) -> [Point] {
-        let orthogonal = [ Point(0, -1), Point(-1, 0), Point(1, 0), Point(0, 1) ]
-        let diagonal = [ Point(1, 1), Point(-1, -1), Point(1, -1), Point(-1, 1) ]
+    enum Direction: String, CaseIterable {
+        case n, w, s, e
+        case nw, ne, sw, se
 
-        let offsets: [Point]
+        static let orthogonal: [Direction] = [ .n, .w, .s, .e ]
+        static let diagonal: [Direction] = [ .nw, .ne, .sw, .se ]
+
+        var offset: Point {
+            switch self {
+            case .n: return Point(0, -1)
+            case .w: return Point(-1, 0)
+            case .s: return Point(0, 1)
+            case .e: return Point(1, 0)
+            case .nw: return Point(-1, -1)
+            case .ne: return Point(1, -1)
+            case .sw: return Point(-1, 1)
+            case .se: return Point(1, 1)
+            }
+        }
+    }
+
+    public func neighbors(adjacency: Adjacency = .orthogonal) -> [Point] {
+        let offsets: [Direction]
         switch adjacency {
-        case .orthogonal: offsets = orthogonal
-        case .diagonal: offsets = diagonal
-        case .all: offsets = orthogonal + diagonal
+        case .orthogonal: offsets = Direction.orthogonal
+        case .diagonal: offsets = Direction.diagonal
+        case .all: offsets = Direction.allCases
         }
 
-        return offsets.map { add($0) }
+        return offsets.map { add($0.offset) }
     }
 }
 

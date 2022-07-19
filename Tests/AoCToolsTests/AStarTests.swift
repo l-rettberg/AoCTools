@@ -74,10 +74,13 @@ class AStarTests: XCTestCase {
         XCTAssertEqual(path.count, 13)
         XCTAssertTrue(path.contains(Point(0,0)))
         XCTAssertTrue(path.contains(Point(1,1)))
+        XCTAssertTrue(path.contains(Point(2,0)))
+        XCTAssertTrue(path.contains(Point(9,3)))
+        XCTAssertTrue(path.contains(Point(10,2)))
+        XCTAssertTrue(path.contains(Point(10,4)))
+
         XCTAssertFalse(path.contains(Point(1,0)))
         XCTAssertFalse(path.contains(Point(0,1)))
-        XCTAssertTrue(path.contains(Point(10,4)))
-        XCTAssertTrue(path.contains(Point(10,2)))
     }
 
     func testPathfindingSnake() throws {
