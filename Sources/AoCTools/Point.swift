@@ -51,14 +51,14 @@ extension Point {
         case orthogonal, diagonal, all
     }
 
-    enum Direction: String, CaseIterable {
+    public enum Direction: String, CaseIterable {
         case n, w, s, e
         case nw, ne, sw, se
 
-        static let orthogonal: [Direction] = [ .n, .w, .s, .e ]
-        static let diagonal: [Direction] = [ .nw, .ne, .sw, .se ]
+        public static let orthogonal: [Direction] = [ .n, .w, .s, .e ]
+        public static let diagonal: [Direction] = [ .nw, .ne, .sw, .se ]
 
-        var offset: Point {
+        public var offset: Point {
             switch self {
             case .n: return Point(0, -1)
             case .w: return Point(-1, 0)
