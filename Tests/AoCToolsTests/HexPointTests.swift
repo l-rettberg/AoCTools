@@ -56,4 +56,16 @@ class HexPointTests: XCTestCase {
         }
     }
 
+    func testOppositeDirection() throws {
+        let zero = Hex.Point.zero
+
+        for direction in Hex.PointyDirection.allCases {
+            XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
+        }
+        for direction in Hex.FlatDirection.allCases {
+            XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
+        }
+
+    }
+
 }

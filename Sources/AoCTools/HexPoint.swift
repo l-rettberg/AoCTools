@@ -70,6 +70,17 @@ public enum Hex {
             case .nw: return Point(0, -1, 1)
             }
         }
+
+        public var opposite: Self {
+            switch self {
+            case .w: return .e
+            case .e: return .w
+            case .ne: return .sw
+            case .nw: return .se
+            case .se: return .nw
+            case .sw: return .ne
+            }
+        }
     }
 
     // "Flat" directions (the hex has flat sides pointing up and down)
@@ -84,6 +95,17 @@ public enum Hex {
             case .s: return Point(0, 1, -1)
             case .se: return Point(1, 0, -1)
             case .ne: return Point(1, -1, 0)
+            }
+        }
+
+        public var opposite: Self {
+            switch self {
+            case .n: return .s
+            case .s: return .n
+            case .ne: return .sw
+            case .nw: return .se
+            case .se: return .nw
+            case .sw: return .ne
             }
         }
     }

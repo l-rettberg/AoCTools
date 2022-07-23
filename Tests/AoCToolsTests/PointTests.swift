@@ -58,4 +58,13 @@ class PointTests: XCTestCase {
         }
     }
 
+    func testOppositeDirection() throws {
+        let zero = Point.zero
+
+        for direction in Point.Direction.allCases {
+            XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
+        }
+
+    }
+
 }

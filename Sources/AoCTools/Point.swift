@@ -70,6 +70,19 @@ extension Point {
             case .se: return Point(1, 1)
             }
         }
+
+        public var opposite: Point.Direction {
+            switch self {
+            case .n: return .s
+            case .s: return .n
+            case .w: return .e
+            case .e: return .w
+            case .ne: return .sw
+            case .nw: return .se
+            case .se: return .nw
+            case .sw: return .ne
+            }
+        }
     }
 
     public func neighbors(adjacency: Adjacency = .orthogonal) -> [Point] {
