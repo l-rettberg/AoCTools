@@ -67,4 +67,31 @@ class PointTests: XCTestCase {
 
     }
 
+    func testTurns() throws {
+        var turned = Set<Point.Direction>()
+
+        for direction in Point.Direction.allCases {
+            turned.insert(direction.turned(.clockwise, by: 90))
+        }
+        XCTAssertEqual(Point.Direction.allCases.count, turned.count)
+
+        turned.removeAll()
+        for direction in Point.Direction.allCases {
+            turned.insert(direction.turned(.clockwise, by: 45))
+        }
+        XCTAssertEqual(Point.Direction.allCases.count, turned.count)
+
+        turned.removeAll()
+        for direction in Point.Direction.allCases {
+            turned.insert(direction.turned(.counterclockwise, by: 90))
+        }
+        XCTAssertEqual(Point.Direction.allCases.count, turned.count)
+
+        turned.removeAll()
+        for direction in Point.Direction.allCases {
+            turned.insert(direction.turned(.counterclockwise, by: 45))
+        }
+        XCTAssertEqual(Point.Direction.allCases.count, turned.count)
+    }
+
 }

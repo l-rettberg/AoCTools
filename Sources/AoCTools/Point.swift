@@ -51,6 +51,11 @@ extension Point {
         case orthogonal, diagonal, all
     }
 
+    public enum Turn {
+        case clockwise // "right"
+        case counterclockwise // "left"
+    }
+
     public enum Direction: String, CaseIterable {
         case n, w, s, e
         case nw, ne, sw, se
@@ -71,7 +76,7 @@ extension Point {
             }
         }
 
-        public var opposite: Point.Direction {
+        public var opposite: Direction {
             switch self {
             case .n: return .s
             case .s: return .n
@@ -81,6 +86,57 @@ extension Point {
             case .nw: return .se
             case .se: return .nw
             case .sw: return .ne
+            }
+        }
+
+        public func turned(_ turn: Turn, by degrees: Int = 90) -> Direction {
+            switch (turn, degrees) {
+            case (.clockwise, 90):
+                switch self {
+                case .n: return .e
+                case .e: return .s
+                case .s: return .w
+                case .w: return .n
+                case .ne: return .se
+                case .nw: return .ne
+                case .se: return .sw
+                case .sw: return .nw
+                }
+            case (.clockwise, 45):
+                switch self {
+                case .n: return .ne
+                case .e: return .se
+                case .s: return .sw
+                case .w: return .nw
+                case .ne: return .e
+                case .nw: return .n
+                case .se: return .s
+                case .sw: return .w
+                }
+            case (.counterclockwise, 90):
+                switch self {
+                case .n: return .w
+                case .e: return .n
+                case .s: return .e
+                case .w: return .s
+                case .ne: return .nw
+                case .nw: return .sw
+                case .se: return .ne
+                case .sw: return .se
+                }
+            case (.counterclockwise, 45):
+                switch self {
+                case .n: return .nw
+                case .e: return .ne
+                case .s: return .se
+                case .w: return .sw
+                case .ne: return .n
+                case .nw: return .w
+                case .se: return .e
+                case .sw: return .s
+                }
+            default:
+                fatalError("unsupported turn degrees \(degrees)")
             }
         }
     }

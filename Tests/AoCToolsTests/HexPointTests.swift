@@ -65,7 +65,13 @@ class HexPointTests: XCTestCase {
         for direction in Hex.FlatDirection.allCases {
             XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
         }
+    }
 
+    func testTurns() throws {
+        XCTAssertEqual(Set(Hex.FlatDirection.allCases.map { $0.turned(.clockwise) }).count, Hex.FlatDirection.allCases.count)
+        XCTAssertEqual(Set(Hex.FlatDirection.allCases.map { $0.turned(.counterclockwise) }).count, Hex.FlatDirection.allCases.count)
+        XCTAssertEqual(Set(Hex.PointyDirection.allCases.map { $0.turned(.clockwise) }).count, Hex.PointyDirection.allCases.count)
+        XCTAssertEqual(Set(Hex.PointyDirection.allCases.map { $0.turned(.counterclockwise) }).count, Hex.PointyDirection.allCases.count)
     }
 
 }

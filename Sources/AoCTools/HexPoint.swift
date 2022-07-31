@@ -7,12 +7,19 @@
 
 public protocol HexDirection {
     var offset: Hex.Point { get }
+    var opposite: Self { get }
+    func turned(_ turn: Hex.Turn) -> Self
 }
 
 public enum Hex {
     public enum Orientation {
         case flat
         case pointy
+    }
+
+    public enum Turn {
+        case clockwise // "right"
+        case counterclockwise // "left"
     }
 
     public struct Point: Hashable, CustomStringConvertible {
@@ -81,6 +88,29 @@ public enum Hex {
             case .sw: return .ne
             }
         }
+
+        public func turned(_ turn: Turn) -> Self {
+            switch turn {
+            case .clockwise:
+                switch self {
+                case .w: return .nw
+                case .e: return .se
+                case .ne: return .e
+                case .nw: return .ne
+                case .se: return .sw
+                case .sw: return .w
+                }
+            case .counterclockwise:
+                switch self {
+                case .w: return .sw
+                case .e: return .ne
+                case .ne: return .nw
+                case .nw: return .w
+                case .se: return .e
+                case .sw: return .se
+                }
+            }
+        }
     }
 
     // "Flat" directions (the hex has flat sides pointing up and down)
@@ -106,6 +136,29 @@ public enum Hex {
             case .nw: return .se
             case .se: return .nw
             case .sw: return .ne
+            }
+        }
+
+        public func turned(_ turn: Turn) -> Self {
+            switch turn {
+            case .clockwise:
+                switch self {
+                case .n: return .ne
+                case .s: return .sw
+                case .ne: return .se
+                case .nw: return .n
+                case .se: return .s
+                case .sw: return .nw
+                }
+            case .counterclockwise:
+                switch self {
+                case .n: return .nw
+                case .s: return .se
+                case .ne: return .n
+                case .nw: return .sw
+                case .se: return .ne
+                case .sw: return .s
+                }
             }
         }
     }
