@@ -33,4 +33,30 @@ class StringTests: XCTestCase {
         XCTAssertEqual(str.indicesOf("bb"), [2])
         XCTAssertEqual(str.indicesOf("xx"), [])
     }
+
+    func testSubscript() throws {
+        let str = "abcdef"
+
+        XCTAssertEqual(str.charAt(0), "a")
+        XCTAssertEqual(str.charAt(1), "b")
+        XCTAssertEqual(str.charAt(5), "f")
+
+        XCTAssertEqual(str[0], "a")
+        XCTAssertEqual(str[1], "b")
+        XCTAssertEqual(str[5], "f")
+    }
+
+    func testSubstring() throws {
+        let str = "abcdef"
+
+        XCTAssertEqual(str.substring(0, 2), "ab")
+        XCTAssertEqual(str.substring(3, 2), "de")
+    }
+
+    func testRangeSubscript() throws {
+        let str = "abcdef"
+
+        XCTAssertEqual(str[0...1], "ab")
+        XCTAssertEqual(str[3..<5], "de")
+    }
 }

@@ -20,6 +20,12 @@ extension String {
         return String(ch)
     }
 
+    public func substring(_ start: Int, _ len: Int) -> String {
+        let end = index(startIndex, offsetBy: start + len)
+        let start = index(startIndex, offsetBy: start)
+        return String(self[start..<end])
+    }
+
     public func indexOf(_ substr: String) -> Int? {
         guard let range = self.range(of: substr) else {
             return nil
@@ -36,5 +42,27 @@ extension String {
             searchRange = index(r.lowerBound, offsetBy: 1)..<endIndex
         }
         return result
+    }
+}
+
+// subscripts
+extension String {
+    public subscript(index: Int) -> String {
+        get { charAt(index) }
+    }
+
+    public subscript(range: ClosedRange<Int>) -> String {
+        get { substring(range.lowerBound, range.upperBound - range.lowerBound + 1) }
+    }
+
+    public subscript(range: Range<Int>) -> String {
+        get { substring(range.lowerBound, range.upperBound - range.lowerBound)  }
+    }
+}
+
+// splitting
+extension String {
+    var lines: [String] {
+        components(separatedBy: "\n")
     }
 }
