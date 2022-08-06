@@ -21,7 +21,7 @@ public protocol AOCDay: Runnable {
 }
 
 extension AOCDay {
-    static var rawInput: String { "" }
+    public static var rawInput: String { "" }
     public var day: String { String("\(Self.self)".suffix(2)) }
 
     public func run() {
