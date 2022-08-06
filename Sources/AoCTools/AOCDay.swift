@@ -22,7 +22,7 @@ public protocol AOCDay: Runnable {
 
 extension AOCDay {
     static var rawInput: String { "" }
-    var day: String { String("\(Self.self)".suffix(2)) }
+    public var day: String { String("\(Self.self)".suffix(2)) }
 
     public func run() {
         run(part: 1, part1)
