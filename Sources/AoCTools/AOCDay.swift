@@ -24,7 +24,7 @@ extension AOCDay {
     static var rawInput: String { "" }
     var day: String { String("\(Self.self)".suffix(2)) }
 
-    func run() {
+    public func run() {
         run(part: 1, part1)
         run(part: 2, part2)
     }
