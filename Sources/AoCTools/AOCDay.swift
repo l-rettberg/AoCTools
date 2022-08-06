@@ -4,12 +4,12 @@
 //  Advent of Code Tools
 //
 
-protocol Runnable {
+public protocol Runnable {
     init(rawInput: String?)
     func run()
 }
 
-protocol AOCDay: Runnable {
+public protocol AOCDay: Runnable {
     var day: String { get }
     static var rawInput: String { get }
 
