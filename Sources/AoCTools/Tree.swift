@@ -9,7 +9,7 @@ import Foundation
 public class Tree<T> {
     public typealias Node = TreeNode<T>
 
-    let root: Node
+    public let root: Node
 
     public var count: Int {
         root.count
