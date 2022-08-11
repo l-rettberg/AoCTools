@@ -1,130 +1,114 @@
 //
 //  Tree.swift
-//
+//  
 //  Advent of Code Tools
 //
 
-public class TreeNode<Value> {
-    public let value: Value
-    private(set) public var children: [TreeNode]
-    private(set) public var parent: TreeNode?
+import Foundation
+
+public class Tree<T> {
+    public typealias Node = TreeNode<T>
+
+    let root: Node
 
     public var count: Int {
-        1 + children.reduce(0) { $0 + $1.count }
+        root.count
+    }
+    
+    public init(root: Node) {
+        self.root = root
     }
 
-    public init(_ value: Value, children: [TreeNode] = []) {
-        self.value = value
-        self.parent = nil
-        self.children = children
-        children.forEach { $0.parent = self }
-    }
-
-    public func add(_ node: TreeNode) {
-        children.append(node)
-        node.parent = self
-    }
-
-    public func delete() {
-        guard
-            let parent = self.parent,
-            let index = parent.children.firstIndex(where: { $0 === self })
-        else {
-            return
-        }
-
-        parent.children.remove(at: index)
-        self.parent = nil
-    }
-
-    /// visit all nodes in the tree, depth-first
-    /// - Parameters:
-    ///   - closure: called for every node in the tree
-    ///   - node: the visited node
-    ///   - level: the depth of the node (root is at 0)
-    public func visitAll(_ closure: (_ node: TreeNode, _ level: Int) -> Void) {
-        visitAll(at: 0, closure)
-    }
-
-    private func visitAll(at level: Int, _ closure: (TreeNode, Int) -> Void) {
-        closure(self, level)
-        children.forEach { $0.visitAll(at: level + 1, closure) }
+    public func visitAll(_ closure: (_ node: Node, _ level: Int) -> Void) {
+        root.visitAll(closure)
     }
 
     public func reduce<Result>(_ initialResult: Result,
-                               _ nextPartialResult: (Result, Value) -> Result)
+                               _ nextPartialResult: (Result, T) -> Result)
     -> Result {
-        var result = nextPartialResult(initialResult, value)
-        children.forEach {
-            result = $0.reduce(result, nextPartialResult)
-        }
-        return result
+        root.reduce(initialResult, nextPartialResult)
     }
 
     public func reduce<Result>(into result: Result,
-                               _ updateAccumulatingResult: (inout Result, Value) -> (Void))
+                               _ updateAccumulatingResult: (inout Result, T) -> (Void))
     -> Result {
-        var result = result
-        updateAccumulatingResult(&result, value)
-        children.forEach {
-            result = $0.reduce(into: result, updateAccumulatingResult)
-        }
-        return result
+        root.reduce(into: result, updateAccumulatingResult)
     }
 
-    public func first(where predicate: (Value) -> Bool) -> TreeNode? {
-        if predicate(value) {
-            return self
+    public func first(where predicate: (T) -> Bool) -> Node? {
+        root.first(where: predicate)
+    }
+
+    public func filter(where predicate: (T) -> Bool) -> [Node] {
+        root.filter(where: predicate)
+    }
+}
+
+extension Tree where T: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(root)
+    }
+}
+
+extension Tree where T: CustomStringConvertible {
+    public func print() {
+        root.print()
+    }
+}
+
+extension Tree where T: Equatable {
+    public func level(of node: Node) -> Int? {
+        level(of: node.value)
+    }
+
+    public func level(of value: T) -> Int? {
+        guard let node = root.first(where: { $0 == value }) else {
+            return nil
         }
-        for child in children {
-            if let found = child.first(where: predicate) {
-                return found
+
+        var level = 0
+        var n: Node? = node
+        while n?.parent != nil {
+            n = n?.parent
+            level += 1
+        }
+        return level
+    }
+
+    public func leastCommonAncestor(_ node1: Node, _ node2: Node) -> Node {
+        leastCommonAncestor(node1.value, node2.value)
+    }
+
+    public func leastCommonAncestor(_ value1: T, _ value2: T) -> Node {
+        let path1 = path(from: value1, to: root)
+        let path2 = path(from: value2, to: root)
+
+        assert(!path1.isEmpty)
+        assert(!path2.isEmpty)
+
+        var i = path1.count - 1
+        var j = path2.count - 1
+        while i >= 0 && j >= 0 && path1[i].value == path2[j].value {
+            i -= 1
+            j -= 1
+        }
+
+        return path1[i+1]
+    }
+
+    private func path(from value: T, to node: Node) -> [Node] {
+        if node.value == value {
+            return [node]
+        }
+
+        for child in node.children {
+            var path = path(from: value, to: child)
+            if !path.isEmpty {
+                path.append(node)
+                return path
             }
         }
-        return nil
-    }
 
-    public func filter(where predicate: (Value) -> Bool) -> [TreeNode] {
-        var result = [TreeNode]()
-        filter(where: predicate, storeIn: &result)
-        return result
-    }
-
-    public func filter(where predicate: (Value) -> Bool, storeIn result: inout [TreeNode]) {
-        if predicate(value) {
-            result.append(self)
-        }
-        children.forEach {
-            $0.filter(where: predicate, storeIn: &result)
-        }
+        return []
     }
 }
-
-extension TreeNode: Equatable where Value: Equatable {
-    public static func == (lhs: TreeNode, rhs: TreeNode) -> Bool {
-        lhs.value == rhs.value && lhs.children == rhs.children
-    }
-}
-
-extension TreeNode: Hashable where Value: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-        hasher.combine(children)
-    }
-}
-
-extension TreeNode where Value: CustomStringConvertible {
-    public func print() {
-        Self.printTree(at: self, level: 0)
-    }
-
-    private static func printTree(at node: TreeNode, level: Int) {
-        let indent = String(repeating: " ", count: level * 2)
-        Swift.print(indent, terminator: "")
-        Swift.print(node.value)
-        for child in node.children {
-            printTree(at: child, level: level + 1)
-        }
-    }
-}
-

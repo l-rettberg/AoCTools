@@ -39,6 +39,9 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(node1.count, 3)
         XCTAssertEqual(node2.count, 2)
         XCTAssertEqual(node3.count, 1)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.count, 3)
     }
 
     func testTreeVisit() {
@@ -77,6 +80,9 @@ class TreeTests: XCTestCase {
 
         let sum = node1.reduce(0, +)
         XCTAssertEqual(sum, 10)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.reduce(0, +), 10)
     }
 
     func testTreeReduceInto() {
@@ -90,6 +96,9 @@ class TreeTests: XCTestCase {
 
         let sum = node1.reduce(into: 0, +=)
         XCTAssertEqual(sum, 10)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.reduce(into: 0, +=), 10)
     }
 
     func testTreeFind() {
@@ -148,5 +157,60 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(node1.count, 1)
 
         XCTAssertEqual(node2.count, 3)
+    }
+
+    func testTreeLevel() {
+        let node1 = TreeNode(1)
+        let node2 = TreeNode(2)
+        let node3 = TreeNode(3)
+        let node4 = TreeNode(4)
+        let node5 = TreeNode(5)
+        node2.add(node3)
+        node2.add(node4)
+        node1.add(node2)
+        node1.add(node5)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.level(of: 1), 0)
+        XCTAssertEqual(tree.level(of: 2), 1)
+        XCTAssertEqual(tree.level(of: 3), 2)
+        XCTAssertEqual(tree.level(of: 4), 2)
+        XCTAssertEqual(tree.level(of: 5), 1)
+        XCTAssertEqual(tree.level(of: 6), nil)
+    }
+
+    func testTreeCommonAncestor() {
+        let node1 = TreeNode(1)
+        let node2 = TreeNode(2)
+        let node3 = TreeNode(3)
+        let node4 = TreeNode(4)
+        let node5 = TreeNode(5)
+        node4.add(node5)
+        node3.add(node4)
+        node2.add(node3)
+        node1.add(node2)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.leastCommonAncestor(3, 5), node3)
+    }
+
+    func testTreeCommonAncestor2() {
+        let node1 = TreeNode("A")
+        let node2 = TreeNode("B")
+        let node3 = TreeNode("C")
+        let node4 = TreeNode("D")
+        let node5 = TreeNode("E")
+        node4.add(node5)
+        node3.add(node4)
+        node2.add(node3)
+        node1.add(node2)
+
+        let node6 = TreeNode("F")
+        let node7 = TreeNode("G")
+        node6.add(node7)
+        node2.add(node6)
+
+        let tree = Tree(root: node1)
+        XCTAssertEqual(tree.leastCommonAncestor("E", "G"), node2)
     }
 }
