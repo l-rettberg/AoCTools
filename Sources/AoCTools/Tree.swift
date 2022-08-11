@@ -75,11 +75,11 @@ extension Tree where T: Equatable {
         return level
     }
 
-    public func leastCommonAncestor(_ node1: Node, _ node2: Node) -> Node {
-        leastCommonAncestor(node1.value, node2.value)
+    public func lowestCommonAncestor(_ node1: Node, _ node2: Node) -> Node {
+        lowestCommonAncestor(node1.value, node2.value)
     }
 
-    public func leastCommonAncestor(_ value1: T, _ value2: T) -> Node {
+    public func lowestCommonAncestor(_ value1: T, _ value2: T) -> Node {
         let path1 = path(from: value1, to: root)
         let path2 = path(from: value2, to: root)
 
