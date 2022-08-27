@@ -9,24 +9,24 @@ import XCTest
 import AoCTools
 
 class AStarTests: XCTestCase {
-    struct Grid: Pathfinding {
-        let pixels: Pixels<Bool>
+    struct Map: Pathfinding {
+        let grid: Grid<Bool>
         let adjacency: Point.Adjacency
 
         init(_ data: [String], adjacency: Point.Adjacency = .orthogonal) {
-            pixels = Pixels.parse(data)
+            grid = Grid.parse(data)
             self.adjacency = adjacency
         }
 
         func draw() {
-            pixels.draw()
+            grid.draw()
         }
 
         func neighbors(for point: Point) -> [Point] {
             point.neighbors(adjacency: adjacency).filter {
-                $0.x >= 0 && $0.x <= pixels.maxX && $0.y >= 0 && $0.y <= pixels.maxY
+                $0.x >= 0 && $0.x <= grid.maxX && $0.y >= 0 && $0.y <= grid.maxY
             }.filter {
-                pixels.points[$0] == false
+                grid.points[$0] == false
             }
         }
 
@@ -40,7 +40,7 @@ class AStarTests: XCTestCase {
     }
 
     func testPathfinding() throws {
-        let grid = Grid([
+        let map = Map([
             "..........",
             "..........",
             "#########.",
@@ -48,9 +48,9 @@ class AStarTests: XCTestCase {
             ".........."
         ])
 
-        grid.draw()
+        map.draw()
 
-        let pathfinder = AStarPathfinder(grid: grid)
+        let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
 
         XCTAssertEqual(path.count, 14)
@@ -60,7 +60,7 @@ class AStarTests: XCTestCase {
     }
 
     func testPathfindingDiagonal() throws {
-        let grid = Grid([
+        let map = Map([
             "...........",
             "...........",
             "##########.",
@@ -68,7 +68,7 @@ class AStarTests: XCTestCase {
             "..........."
         ], adjacency: .diagonal)
 
-        let pathfinder = AStarPathfinder(grid: grid)
+        let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(10, 4))
 
         XCTAssertEqual(path.count, 13)
@@ -84,7 +84,7 @@ class AStarTests: XCTestCase {
     }
 
     func testPathfindingSnake() throws {
-        let grid = Grid([
+        let map = Map([
             "..........",
             "#########.",
             "..........",
@@ -92,9 +92,9 @@ class AStarTests: XCTestCase {
             ".........."
         ])
 
-        grid.draw()
+        map.draw()
 
-        let pathfinder = AStarPathfinder(grid: grid)
+        let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
 
         XCTAssertEqual(path.count, 32)
@@ -104,8 +104,8 @@ class AStarTests: XCTestCase {
         XCTAssertTrue(path.contains(Point(0,3)))
     }
 
-    func testPathfindingBlock() throws {
-        let grid = Grid([
+    func testPathfindingBlocked() throws {
+        let map = Map([
             "..........",
             "..........",
             "..........",
@@ -113,7 +113,7 @@ class AStarTests: XCTestCase {
             "........#."
         ])
 
-        let pathfinder = AStarPathfinder(grid: grid)
+        let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
 
         XCTAssertEqual(path.count, 0)

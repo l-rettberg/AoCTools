@@ -19,6 +19,16 @@ public protocol Pathfinding {
     func hScore(from: Coordinate, to: Coordinate) -> CostType
 }
 
+public extension Pathfinding where Coordinate == Point, CostType == Int {
+    func costToMove(from: Point, to: Point) -> Int {
+        1
+    }
+
+    func hScore(from: Point, to: Point) -> Int {
+        from.distance(to: to)
+    }
+}
+
 // MARK: - implementation
 
 public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashable, PF.CostType: Numeric & Comparable {
@@ -57,10 +67,10 @@ public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashabl
         }
     }
 
-    private let grid: PF
+    private let map: PF
 
-    public init(grid: PF) {
-        self.grid = grid
+    public init(map: PF) {
+        self.map = map
     }
 
     public func shortestPathFrom(_ start: Coord, to destination: Coord) -> [Coord] {
@@ -83,13 +93,13 @@ public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashabl
                 return result.reversed()
             }
 
-            for neighbor in grid.neighbors(for: currentCoord) {
-                let moveCost = grid.costToMove(from: currentCoord, to: neighbor)
+            for neighbor in map.neighbors(for: currentCoord) {
+                let moveCost = map.costToMove(from: currentCoord, to: neighbor)
                 let newcost = currentNode.gScore + moveCost
 
                 if (explored[neighbor] == nil) || (explored[neighbor]! > newcost) {
                     explored[neighbor] = newcost
-                    let hScore = grid.hScore(from: currentCoord, to: neighbor)
+                    let hScore = map.hScore(from: currentCoord, to: neighbor)
                     let node = PathNode(coordinate: neighbor, parent: currentNode, moveCost: moveCost, hScore: hScore)
                     frontier.insert(node)
                 }

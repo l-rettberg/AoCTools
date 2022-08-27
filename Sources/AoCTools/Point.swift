@@ -51,7 +51,7 @@ extension Point {
         case orthogonal, diagonal, all
     }
 
-    public enum Turn {
+    public enum Turn: CaseIterable {
         case clockwise // "right"
         case counterclockwise // "left"
     }
@@ -150,6 +150,10 @@ extension Point {
         }
 
         return offsets.map { add($0.offset) }
+    }
+
+    public func moved(_ direction: Direction) -> Point {
+        self + direction.offset
     }
 }
 

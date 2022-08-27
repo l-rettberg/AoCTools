@@ -61,6 +61,14 @@ public enum Hex {
                 return PointyDirection.allCases.map { $0.offset }
             }
         }
+
+        public func moved(_ direction: PointyDirection) -> Point {
+            self + direction.offset
+        }
+
+        public func moved(_ direction: FlatDirection) -> Point {
+            self + direction.offset
+        }
     }
 
     // "Pointy" directions (the hex has corners pointing up and down)

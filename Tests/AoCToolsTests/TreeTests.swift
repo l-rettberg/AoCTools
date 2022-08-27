@@ -191,7 +191,7 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.lowestCommonAncestor(3, 5), node3)
+        XCTAssertEqual(tree.lowestCommonAncestor(of: 3, and: 5), node3)
     }
 
     func testTreeCommonAncestor2() {
@@ -211,6 +211,6 @@ class TreeTests: XCTestCase {
         node2.add(node6)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.lowestCommonAncestor("E", "G"), node2)
+        XCTAssertEqual(tree.lowestCommonAncestor(of: "E", and: "G"), node2)
     }
 }

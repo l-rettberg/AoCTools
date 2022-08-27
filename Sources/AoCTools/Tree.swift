@@ -24,14 +24,14 @@ public class Tree<T> {
     }
 
     public func reduce<Result>(_ initialResult: Result,
-                               _ nextPartialResult: (Result, T) -> Result)
-    -> Result {
+                               _ nextPartialResult: (Result, T) -> Result
+    ) -> Result {
         root.reduce(initialResult, nextPartialResult)
     }
 
     public func reduce<Result>(into result: Result,
-                               _ updateAccumulatingResult: (inout Result, T) -> (Void))
-    -> Result {
+                               _ updateAccumulatingResult: (inout Result, T) -> (Void)
+    ) -> Result {
         root.reduce(into: result, updateAccumulatingResult)
     }
 
@@ -75,11 +75,11 @@ extension Tree where T: Equatable {
         return level
     }
 
-    public func lowestCommonAncestor(_ node1: Node, _ node2: Node) -> Node {
-        lowestCommonAncestor(node1.value, node2.value)
+    public func lowestCommonAncestor(of node1: Node, and node2: Node) -> Node {
+        lowestCommonAncestor(of: node1.value, and: node2.value)
     }
 
-    public func lowestCommonAncestor(_ value1: T, _ value2: T) -> Node {
+    public func lowestCommonAncestor(of value1: T, and value2: T) -> Node {
         let path1 = path(from: value1, to: root)
         let path2 = path(from: value2, to: root)
 

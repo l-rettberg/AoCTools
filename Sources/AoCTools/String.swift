@@ -65,4 +65,12 @@ extension String {
     var lines: [String] {
         components(separatedBy: "\n")
     }
+
+    func asInts(separator: String = ",") -> [Int] {
+        tokenized(separator: separator).map { Int($0)! }
+    }
+
+    func tokenized(separator: String = " ") -> [String] {
+        self.components(separatedBy: separator).map { String($0) }
+    }
 }
