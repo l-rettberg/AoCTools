@@ -71,7 +71,13 @@ public class TreeNode<Value> {
         }
         return result
     }
+}
 
+// MARK: - DFS
+extension TreeNode {
+    /// Perform a depth-first search for the node where `predicate` returns true
+    /// - Parameter predicate: a closure to check if the `value` of a node is a match
+    /// - Returns: the first node that satisfies `predicate`, or `nil` if no such node is found
     public func first(where predicate: (Value) -> Bool) -> TreeNode? {
         if predicate(value) {
             return self
@@ -84,6 +90,7 @@ public class TreeNode<Value> {
         return nil
     }
 
+    /// Perform a depth-first search for all nodes where `predicate` returns true
     public func filter(where predicate: (Value) -> Bool) -> [TreeNode] {
         var result = [TreeNode]()
         filter(where: predicate, storeIn: &result)
@@ -98,6 +105,48 @@ public class TreeNode<Value> {
             $0.filter(where: predicate, storeIn: &result)
         }
     }
+}
+
+// MARK: - BFS
+extension TreeNode {
+    /// Perform a breadth-first search for the node where `predicate` returns true
+    /// - Parameter predicate: a closure to check if the `value` of a node is a match
+    /// - Returns: the first node that satisfies `predicate`, or `nil` if no such node is found
+    public func breadthFirstSearch(_ predicate: (Value) -> Bool) -> TreeNode? {
+        var queue = Queue<TreeNode>()
+        queue.push(self)
+
+        while !queue.isEmpty {
+            let current = queue.pop()
+            Swift.print("checking \(current.value)")
+            if predicate(current.value) {
+                return current
+            }
+            for child in current.children {
+                queue.push(child)
+            }
+        }
+        return nil
+    }
+
+    public func breadthFirstSearchAll(_ predicate: (Value) -> Bool) -> [TreeNode]
+    {
+        var result = [TreeNode]()
+        var queue = Queue<TreeNode>()
+        queue.push(self)
+
+        while !queue.isEmpty {
+            let current = queue.pop()
+            if predicate(current.value) {
+                result.append(current)
+            }
+            for child in current.children {
+                queue.push(child)
+            }
+        }
+        return result
+    }
+
 }
 
 extension TreeNode: Equatable where Value: Equatable {

@@ -69,6 +69,29 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(visits, [0,2,6,8])
     }
 
+    func testTreeVisit3() {
+        let node3 = TreeNode(3, children: [TreeNode(6), TreeNode(7)])
+        let node2 = TreeNode(2, children: [TreeNode(4), TreeNode(5)])
+        let node1 = TreeNode(1, children: [node2, node3])
+
+        var visits = [Int]()
+        node1.visitAll { node, level in
+            visits.append(node.value)
+        }
+
+        XCTAssertEqual(visits, [1,2,4,5,3,6,7]) // DFS
+    }
+
+    func testTreeBFS() {
+        let node3 = TreeNode(3, children: [TreeNode(6), TreeNode(7)])
+        let node2 = TreeNode(2, children: [TreeNode(4), TreeNode(5)])
+        let node1 = TreeNode(1, children: [node2, node3])
+
+        let bfs = node1.breadthFirstSearchAll { _ in true }
+        let values = bfs.map { $0.value }
+        XCTAssertEqual(values, [1,2,3,4,5,6,7]) // BFS
+    }
+
     func testTreeReduce() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)

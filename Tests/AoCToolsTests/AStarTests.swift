@@ -51,10 +51,10 @@ class AStarTests: XCTestCase {
         map.draw()
 
         let pathfinder = AStarPathfinder(map: map)
-        let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
+        let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
-        XCTAssertEqual(path.count, 14)
-        XCTAssertTrue(path.contains(Point(0,0)))
+        XCTAssertEqual(path.count, 13)
+        XCTAssertFalse(path.contains(.zero))
         XCTAssertTrue(path.contains(Point(9,4)))
         XCTAssertTrue(path.contains(Point(9,2)))
     }
@@ -69,10 +69,10 @@ class AStarTests: XCTestCase {
         ], adjacency: .diagonal)
 
         let pathfinder = AStarPathfinder(map: map)
-        let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(10, 4))
+        let path = pathfinder.shortestPath(from: .zero, to: Point(10, 4))
 
-        XCTAssertEqual(path.count, 13)
-        XCTAssertTrue(path.contains(Point(0,0)))
+        XCTAssertEqual(path.count, 12)
+        XCTAssertFalse(path.contains(.zero))
         XCTAssertTrue(path.contains(Point(1,1)))
         XCTAssertTrue(path.contains(Point(2,0)))
         XCTAssertTrue(path.contains(Point(9,3)))
@@ -95,10 +95,10 @@ class AStarTests: XCTestCase {
         map.draw()
 
         let pathfinder = AStarPathfinder(map: map)
-        let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
+        let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
-        XCTAssertEqual(path.count, 32)
-        XCTAssertTrue(path.contains(Point(0,0)))
+        XCTAssertEqual(path.count, 31)
+        XCTAssertFalse(path.contains(.zero))
         XCTAssertTrue(path.contains(Point(9,4)))
         XCTAssertTrue(path.contains(Point(9,2)))
         XCTAssertTrue(path.contains(Point(0,3)))
@@ -114,7 +114,7 @@ class AStarTests: XCTestCase {
         ])
 
         let pathfinder = AStarPathfinder(map: map)
-        let path = pathfinder.shortestPathFrom(Point(0, 0), to: Point(9, 4))
+        let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
         XCTAssertEqual(path.count, 0)
     }
