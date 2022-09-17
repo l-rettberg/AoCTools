@@ -37,7 +37,7 @@ public class TreeNode<Value> {
         self.parent = nil
     }
 
-    /// visit all nodes in the tree, depth-first
+    /// recursively visit all nodes in the tree, depth-first
     /// - Parameters:
     ///   - closure: called for every node in the tree
     ///   - node: the visited node
@@ -52,8 +52,8 @@ public class TreeNode<Value> {
     }
 
     public func reduce<Result>(_ initialResult: Result,
-                               _ nextPartialResult: (Result, Value) -> Result)
-    -> Result {
+                               _ nextPartialResult: (Result, Value) -> Result
+    ) -> Result {
         var result = nextPartialResult(initialResult, value)
         children.forEach {
             result = $0.reduce(result, nextPartialResult)
@@ -62,8 +62,8 @@ public class TreeNode<Value> {
     }
 
     public func reduce<Result>(into result: Result,
-                               _ updateAccumulatingResult: (inout Result, Value) -> (Void))
-    -> Result {
+                               _ updateAccumulatingResult: (inout Result, Value) -> (Void)
+    ) -> Result {
         var result = result
         updateAccumulatingResult(&result, value)
         children.forEach {
@@ -73,9 +73,9 @@ public class TreeNode<Value> {
     }
 }
 
-// MARK: - DFS
+// MARK: - DFS recursive
 extension TreeNode {
-    /// Perform a depth-first search for the node where `predicate` returns true
+    /// Perform a recursive depth-first search for the node where `predicate` returns true
     /// - Parameter predicate: a closure to check if the `value` of a node is a match
     /// - Returns: the first node that satisfies `predicate`, or `nil` if no such node is found
     public func first(where predicate: (Value) -> Bool) -> TreeNode? {
@@ -90,20 +90,50 @@ extension TreeNode {
         return nil
     }
 
-    /// Perform a depth-first search for all nodes where `predicate` returns true
+    /// Perform a recursive depth-first search for all nodes where `predicate` returns true
     public func filter(where predicate: (Value) -> Bool) -> [TreeNode] {
         var result = [TreeNode]()
-        filter(where: predicate, storeIn: &result)
+        filter(where: predicate, result: &result)
         return result
     }
 
-    private func filter(where predicate: (Value) -> Bool, storeIn result: inout [TreeNode]) {
+    private func filter(where predicate: (Value) -> Bool, result: inout [TreeNode]) {
         if predicate(value) {
             result.append(self)
         }
         children.forEach {
-            $0.filter(where: predicate, storeIn: &result)
+            $0.filter(where: predicate, result: &result)
         }
+    }
+}
+
+// MARK: - DFS iterative
+extension TreeNode {
+    public func firstIterative(where predicate: (Value) -> Bool) -> TreeNode? {
+        var list = List<TreeNode>()
+        list.append(self)
+
+        while let current = list.removeFirst() {
+            if predicate(current.value) {
+                return current
+            }
+            list.prepend(contentsOf: current.children)
+        }
+        return nil
+    }
+
+    public func filterIterative(where predicate: (Value) -> Bool) -> [TreeNode] {
+        var list = List<TreeNode>()
+        var result = [TreeNode]()
+        list.append(self)
+
+        while let current = list.removeFirst() {
+            if predicate(current.value) {
+                result.append(current)
+            }
+            list.prepend(contentsOf: current.children)
+        }
+        return result
     }
 }
 
@@ -122,9 +152,7 @@ extension TreeNode {
             if predicate(current.value) {
                 return current
             }
-            for child in current.children {
-                queue.push(child)
-            }
+            queue.push(contentsOf: current.children)
         }
         return nil
     }
@@ -140,9 +168,7 @@ extension TreeNode {
             if predicate(current.value) {
                 result.append(current)
             }
-            for child in current.children {
-                queue.push(child)
-            }
+            queue.push(contentsOf: current.children)
         }
         return result
     }

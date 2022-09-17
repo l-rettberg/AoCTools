@@ -10,8 +10,8 @@
 //
 
 public protocol Pathfinding {
-    associatedtype Coordinate
-    associatedtype Cost
+    associatedtype Coordinate: Hashable
+    associatedtype Cost: Numeric & Comparable
 
     func neighbors(for: Coordinate) -> [Coordinate]
     func costToMove(from: Coordinate, to: Coordinate) -> Cost
@@ -31,7 +31,7 @@ public extension Pathfinding where Coordinate == Point, Cost == Int {
 
 // MARK: - implementation
 
-public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashable, PF.Cost: Numeric & Comparable {
+public final class AStarPathfinder<PF: Pathfinding> {
     public typealias Coordinate = PF.Coordinate
     public typealias Cost = PF.Cost
 
@@ -97,7 +97,7 @@ public final class AStarPathfinder<PF: Pathfinding> where PF.Coordinate: Hashabl
                 let moveCost = map.costToMove(from: currentCoordinate, to: neighbor)
                 let newcost = currentNode.gScore + moveCost
 
-                if (explored[neighbor] == nil) || (explored[neighbor]! > newcost) {
+                if explored[neighbor] == nil || explored[neighbor]! > newcost {
                     explored[neighbor] = newcost
                     let hScore = map.hScore(from: currentCoordinate, to: neighbor)
                     let node = PathNode(coordinate: neighbor, parent: currentNode, moveCost: moveCost, hScore: hScore)

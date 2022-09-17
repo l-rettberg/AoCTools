@@ -40,6 +40,10 @@ public struct List<Element> {
         count += 1
     }
 
+    public mutating func prepend<S: Sequence>(contentsOf elements: S) where S.Element == Element {
+        elements.forEach { prepend($0) }
+    }
+
     /// Add an element to the end of the list
     public mutating func append(_ element: Element) {
         makeUnique()
@@ -53,6 +57,10 @@ public struct List<Element> {
             tail = node
         }
         count += 1
+    }
+
+    public mutating func append<S: Sequence>(contentsOf elements: S) where S.Element == Element {
+        elements.forEach { append($0) }
     }
 
     /// Remove and return the element at the front of the list

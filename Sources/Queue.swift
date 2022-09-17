@@ -23,6 +23,10 @@ public struct Queue<Element> {
         storage.append(element)
     }
 
+    public mutating func push<S: Sequence>(contentsOf elements: S) where S.Element == Element {
+        elements.forEach { push($0) }
+    }
+
     /// Remove an element from the top of the queue and return it.
     /// Popping from an empty queue results in a crash.
     @discardableResult
