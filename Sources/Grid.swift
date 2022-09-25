@@ -21,6 +21,10 @@ public struct Grid<Value: Drawable> {
         self.maxY = maxY
     }
 
+    public static func parse(_ string: String) -> Grid {
+        parse(string.components(separatedBy: "\n"))
+    }
+
     public static func parse(_ data: [String]) -> Grid {
         var points = [Point: Value]()
 
@@ -38,3 +42,7 @@ public struct Grid<Value: Drawable> {
         points.draw(xRange: 0...maxX, yRange: 0...maxY)
     }
 }
+
+extension Grid: Equatable where Value: Equatable { }
+
+extension Grid: Hashable where Value: Hashable { }
