@@ -8,19 +8,33 @@
 import Foundation
 
 extension Set {
-    static func + (lhs: Set, rhs: Set) -> Set {
+    public static func + (lhs: Set, rhs: Set) -> Set {
         lhs.union(rhs)
     }
 
-    static func + (lhs: Set, rhs: Set.Element) -> Set {
+    public static func + (lhs: Set, rhs: Set.Element) -> Set {
         lhs.union([rhs])
     }
 
-    static func - (lhs: Set, rhs: Set) -> Set {
+    public static func - (lhs: Set, rhs: Set) -> Set {
         lhs.subtracting(rhs)
     }
 
-    static func - (lhs: Set, rhs: Set.Element) -> Set {
+    public static func - (lhs: Set, rhs: Set.Element) -> Set {
         lhs.subtracting([rhs])
+    }
+}
+
+extension Set {
+    public func combinations() -> [Set<Element>] {
+        var allCombinations = [Set<Element>]()
+        for element in self {
+            let oneElementCombo = Set([element])
+            for i in 0..<allCombinations.count {
+                allCombinations.append(allCombinations[i] + oneElementCombo)
+            }
+            allCombinations.append(oneElementCombo)
+        }
+        return allCombinations
     }
 }
