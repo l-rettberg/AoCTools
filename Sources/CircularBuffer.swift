@@ -24,6 +24,8 @@ public class CircularBuffer<T> {
 
     private var current: Node? = nil
 
+    public init() {}
+
     deinit {
         var n: Node? = current
 
