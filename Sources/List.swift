@@ -7,7 +7,18 @@
 /// A doubly-linked list, adding/removing elements at start and end are O(1)
 /// Follows the usual copy-on-write semantics for structs
 public struct List<Element> {
-    /// Return the number of element in this list
+
+    public class Node {
+        public let value: Element
+        public fileprivate(set) var next: Node? = nil
+        public fileprivate(set) var prev: Node? = nil
+
+        init(_ value: Element) {
+            self.value = value
+        }
+    }
+
+    /// Return the number of elements in this list
     public private(set) var count = 0
 
     public init() { }
@@ -20,16 +31,17 @@ public struct List<Element> {
     public var isEmpty: Bool { head == nil }
 
     /// The first element or `nil`
-    public var first: Element? { head?.element }
+    public var first: Element? { head?.value }
 
     /// The last element or `nil`
-    public var last: Element? { tail?.element }
+    public var last: Element? { tail?.value }
 
     /// Add an element to the front of the list
     public mutating func prepend(_ element: Element) {
         makeUnique()
-        let node = ListNode(element)
+        let node = Node(element)
         if head == nil {
+            assert(tail == nil)
             head = node
             tail = node
         } else {
@@ -47,8 +59,9 @@ public struct List<Element> {
     /// Add an element to the end of the list
     public mutating func append(_ element: Element) {
         makeUnique()
-        let node = ListNode(element)
+        let node = Node(element)
         if tail == nil {
+            assert(head == nil)
             head = node
             tail = node
         } else {
@@ -66,6 +79,7 @@ public struct List<Element> {
     /// Remove and return the element at the front of the list
     @discardableResult
     public mutating func removeFirst() -> Element? {
+        guard head != nil else { return nil }
         makeUnique()
         count -= 1
         let headNode = head
@@ -76,12 +90,14 @@ public struct List<Element> {
         }
         headNode?.next = nil
         headNode?.prev = nil
-        return headNode?.element
+        return headNode?.value
     }
 
     /// Remove and return the element at the end of the list
     @discardableResult
     public mutating func removeLast() -> Element? {
+        guard tail != nil else { return nil }
+
         makeUnique()
         count -= 1
         let tailNode = tail
@@ -92,22 +108,36 @@ public struct List<Element> {
         }
         tailNode?.next = nil
         tailNode?.prev = nil
-        return tailNode?.element
+        return tailNode?.value
     }
 
-    // MARK: - internal storage
-    private class ListNode {
-        let element: Element
-        var next: ListNode? = nil
-        var prev: ListNode? = nil
+    public mutating func remove(_ node: List.Node) {
+        makeUnique()
 
-        init(_ element: Element) {
-            self.element = element
+        if node === head {
+            assert(node.prev == nil)
+            head = head?.next
+            node.next = nil
+            count -= 1
+            if head == nil { tail = nil }
+        } else if node === tail {
+            assert(node.next == nil)
+            tail = tail?.prev
+            node.prev = nil
+            count -= 1
+            if tail == nil { head = nil }
+        } else {
+            assert(node.next != nil && node.prev != nil)
+            node.prev?.next = node.next
+            node.next?.prev = node.prev
+            node.prev = nil
+            node.next = nil
+            count -= 1
         }
     }
 
-    private var head: ListNode? = nil
-    private var tail: ListNode? = nil {
+    public private(set) var head: Node? = nil
+    public private(set) var tail: Node? = nil {
         didSet { sentinel.tail = tail }
     }
 
@@ -116,7 +146,7 @@ public struct List<Element> {
     // we need a reference object both for `isKnownUniquelyReferenced` and
     // for implementing a deinit method that deinits all remaining elements
     private final class Sentinel {
-        var tail: ListNode?
+        var tail: Node?
 
         deinit {
             var t = tail
@@ -136,12 +166,12 @@ public struct List<Element> {
     private mutating func makeUnique() {
         guard !isUnique else { return }
 
-        var newHead: ListNode? = nil
-        var newTail: ListNode? = nil
+        var newHead: Node? = nil
+        var newTail: Node? = nil
 
         var node = head
         while node != nil {
-            let copy = ListNode(node!.element)
+            let copy = Node(node!.value)
             if newHead == nil {
                 newHead = copy
             }
@@ -154,5 +184,25 @@ public struct List<Element> {
 
         head = newHead
         tail = newTail
+    }
+}
+
+extension List: Sequence {
+    public func makeIterator() -> ListIterator<Element> {
+        ListIterator(current: head)
+    }
+}
+
+public class ListIterator<Element>: IteratorProtocol {
+    private var current: List<Element>.Node?
+
+    init(current: List<Element>.Node?) {
+        self.current = current
+    }
+
+    public func next() -> Element? {
+        let value = current?.value
+        current = current?.next
+        return value
     }
 }

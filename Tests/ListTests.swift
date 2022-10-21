@@ -25,6 +25,16 @@ class ListTests: XCTestCase {
         XCTAssertEqual(list.count, 2)
         XCTAssertEqual(list.first, 2)
         XCTAssertEqual(list.last, 3)
+
+        list.removeLast()
+        list.removeLast()
+        XCTAssertEqual(list.count, 0)
+        XCTAssertEqual(list.isEmpty, true)
+
+        list.removeLast()
+        list.removeLast()
+        XCTAssertEqual(list.count, 0)
+        XCTAssertEqual(list.isEmpty, true)
     }
 
     func testListCopyOnWrite() {
@@ -41,5 +51,35 @@ class ListTests: XCTestCase {
         XCTAssertEqual(list.first, 1)
         XCTAssertEqual(list.last, 4)
         XCTAssertEqual(list.count, 4)
+    }
+
+    func testListRemoveNodeHead() {
+        var list = List([1,2,3,4])
+        let node = list.head!
+
+        list.remove(node)
+        XCTAssertEqual(list.first, 2)
+        XCTAssertEqual(list.last, 4)
+        XCTAssertEqual(list.count, 3)
+    }
+
+    func testListRemoveNodeTail() {
+        var list = List([1,2,3,4])
+        let node = list.tail!
+
+        list.remove(node)
+        XCTAssertEqual(list.first, 1)
+        XCTAssertEqual(list.last, 3)
+        XCTAssertEqual(list.count, 3)
+    }
+
+    func testListRemoveNodeMiddle() {
+        var list = List([1,2,3,4])
+        let node = list.head!.next!
+
+        list.remove(node)
+        XCTAssertEqual(list.first, 1)
+        XCTAssertEqual(list.last, 4)
+        XCTAssertEqual(list.count, 3)
     }
 }
