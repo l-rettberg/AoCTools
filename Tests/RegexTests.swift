@@ -42,5 +42,4 @@ class RegexTests: XCTestCase {
         let matches = regex.matches(in: "b inc 5 if a > 1")
         XCTAssertEqual(matches, ["b", "inc", "5", "a", ">", "1" ])
     }
-
 }

@@ -48,8 +48,6 @@ class AStarTests: XCTestCase {
             ".........."
         ])
 
-        map.draw()
-
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
@@ -91,8 +89,6 @@ class AStarTests: XCTestCase {
             ".#########",
             ".........."
         ])
-
-        map.draw()
 
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))

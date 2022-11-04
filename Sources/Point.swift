@@ -162,3 +162,13 @@ extension Point: CustomStringConvertible {
         "\(x),\(y)"
     }
 }
+
+extension Point: Comparable {
+    /// compare in "reading order" (top to bottom, left to right)
+    public static func < (lhs: Point, rhs: Point) -> Bool {
+        if lhs.y != rhs.y {
+            return lhs.y < rhs.y
+        }
+        return lhs.x < rhs.x
+    }
+}

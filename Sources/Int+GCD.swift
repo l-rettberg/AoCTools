@@ -18,7 +18,7 @@ func gcd(_ m: Int, _ n: Int) -> Int {
     }
 }
 
-/// Lowest Common MultipleW
+/// Lowest Common Multiple
 /// - Parameters:
 ///   - m: Int
 ///   - n: Int

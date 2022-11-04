@@ -14,8 +14,8 @@ final class Day98: AOCDay {
         self.input = rawInput ?? Self.rawInput
     }
 
-    func part1() -> Int { 0 }
-    func part2() -> String { "" }
+    func part1() -> Int { 98 }
+    func part2() -> String { "d98" }
 }
 
 final class Day99: AOCDay {
@@ -30,23 +30,23 @@ final class Day99: AOCDay {
 }
 
 extension Day99 {
-    static let rawInput = "data"
+    static let rawInput = "day99data"
 }
 
 class DayTests: XCTestCase {
     func testDays() throws {
         let d99 = Day99()
-        d99.run()
-
         XCTAssertEqual(d99.day, "99")
+        XCTAssertEqual(d99.input, "day99data")
+        XCTAssertEqual(Day99.rawInput, "day99data")
         XCTAssertEqual(d99.part1(), 0)
         XCTAssertEqual(d99.part2(), "")
-        XCTAssertEqual(d99.input, "data")
 
-        let testD99 = Day99(rawInput: "test")
-        XCTAssertEqual(testD99.day, "99")
-        XCTAssertEqual(testD99.input, "test")
-
+        let d98 = Day98(rawInput: "test")
+        XCTAssertEqual(d98.day, "98")
+        XCTAssertEqual(d98.input, "test")
         XCTAssertEqual(Day98.rawInput, "")
+        XCTAssertEqual(d98.part1(), 98)
+        XCTAssertEqual(d98.part2(), "d98")
     }
 }
