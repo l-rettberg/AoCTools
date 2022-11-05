@@ -5,43 +5,45 @@
 //
 
 public protocol Drawable {
-    var draw: String { get }
-    static func value(for str: String) -> Self
+    var draw: Character { get }
+    static func value(for ch: Character) -> Self
 }
 
-extension Drawable where Self: RawRepresentable, Self.RawValue == String {
-    static func value(for str: String) -> Self {
-        Self(rawValue: str)!
+public extension Drawable where Self: RawRepresentable, Self.RawValue == Character {
+    static func value(for ch: Character) -> Self {
+        Self(rawValue: ch)!
     }
 
-    var draw: String { rawValue }
+    var draw: Character { rawValue }
 }
 
-extension Drawable where Self: RawRepresentable, Self.RawValue == Character {
-    static func value(for str: Character) -> Self {
-        Self(rawValue: str)!
+public extension Drawable where Self: RawRepresentable, Self.RawValue == String {
+    static func value(for ch: Character) -> Self {
+        Self(rawValue: String(ch))!
     }
 
-    var draw: String { String(rawValue) }
+    var draw: Character { rawValue.first! }
 }
 
 public extension Drawable where Self == Bool {
-    static var off: String { "." }
-    static var on: String { "#" }
+    static var off: Character { "." }
+    static var on: Character { "#" }
 }
 
 extension Bool: Drawable {
-    public var draw: String { self ? Self.on : Self.off }
-    public static func value(for str: String) -> Self {
-        str == Self.on
+    public var draw: Character { self ? Self.on : Self.off }
+    public static func value(for ch: Character) -> Self {
+        ch == Self.on
     }
 }
 
 extension Dictionary where Key == Point, Value: Drawable {
-    public func draw(xRange: ClosedRange<Int>, yRange: ClosedRange<Int>, default: String = ".") {
-        for y in yRange {
-            let chars = xRange.map { self[Point($0, y)]?.draw ?? `default` }
-            print(chars.joined())
+    public func draw(xRange: ClosedRange<Int>, yRange: ClosedRange<Int>, default: Character = ".") -> [String] {
+        yRange.map { y in
+            let chars = xRange.map { x in
+                self[Point(x, y)]?.draw ?? `default`
+            }
+            return String(chars)
         }
     }
 }

@@ -11,6 +11,9 @@ public struct Grid<Value: Drawable> {
     public let minY: Int
     public let maxY: Int
 
+    public var xRange: ClosedRange<Int> { minX ... maxX }
+    public var yRange: ClosedRange<Int> { minY ... maxY }
+
     public init(points: [Point: Value]) {
         let minX = points.keys.min { $0.x < $1.x }!.x
         let maxX = points.keys.max { $0.x < $1.x }!.x
@@ -28,7 +31,7 @@ public struct Grid<Value: Drawable> {
     }
 
     public static func parse(_ string: String) -> Grid {
-        parse(string.components(separatedBy: "\n"))
+        parse(string.lines)
     }
 
     public static func parse(_ data: [String]) -> Grid {
@@ -37,7 +40,7 @@ public struct Grid<Value: Drawable> {
         for (y, line) in data.enumerated() {
             for (x, ch) in line.enumerated() {
                 let point = Point(x, y)
-                points[point] = Value.value(for: String(ch))
+                points[point] = Value.value(for: ch)
             }
         }
 
@@ -47,7 +50,9 @@ public struct Grid<Value: Drawable> {
     }
 
     public func draw() {
-        points.draw(xRange: minX...maxX, yRange: minY...maxY)
+        points.draw(xRange: xRange, yRange: yRange).forEach {
+            print($0)
+        }
     }
 }
 
