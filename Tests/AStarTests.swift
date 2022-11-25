@@ -34,7 +34,7 @@ class AStarTests: XCTestCase {
             1
         }
 
-        func hScore(from: Point, to: Point) -> Int {
+        func distance(from: Point, to: Point) -> Int {
             from.distance(to: to)
         }
     }

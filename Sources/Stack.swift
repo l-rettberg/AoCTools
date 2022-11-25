@@ -24,10 +24,13 @@ public struct Stack<Element> {
     }
 
     /// Remove the element at the top of the stack and return it.
-    /// Popping from an empty stack results in a crash.
+    /// For an empty stack, return `nil`.
     @discardableResult
-    public mutating func pop() -> Element {
-        storage.removeLast()
+    public mutating func pop() -> Element? {
+        if storage.isEmpty {
+            return nil
+        }
+        return storage.removeLast()
     }
 
     /// Return the top element of the stack without removing it.

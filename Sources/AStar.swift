@@ -10,30 +10,46 @@
 //
 
 public protocol Pathfinding {
-    associatedtype Coordinate: Hashable
-    associatedtype Cost: Numeric & Comparable
+    associatedtype Coordinate: Hashable = Point
+    associatedtype Cost: Numeric & Comparable = Int
 
-    func neighbors(for: Coordinate) -> [Coordinate]
+    /// Returns the eligible neighbors of `point`
+    /// - Parameter for: the current coordinate
+    /// - Returns: the eligible neighbors
+    func neighbors(for point: Coordinate) -> [Coordinate]
+
+    /// Return the "cost" to move from `from` to `to`
+    /// - Parameters:
+    ///   - from: The coordinate to move from
+    ///   - to: The coordinate to move to
+    /// - Returns: The cost of the move
     func costToMove(from: Coordinate, to: Coordinate) -> Cost
 
-    func hScore(from: Coordinate, to: Coordinate) -> Cost
+    /// Return the distance between `from` and `to`.
+    /// - Parameters:
+    ///   - from: The coordinate to move from
+    ///   - to: The coordinate to move to
+    /// - Returns: The distance between the coordinates
+    func distance(from: Coordinate, to: Coordinate) -> Cost
 }
 
+// default implementation for simple maps:
+// costToMove is 1, distance is manhattan distance
 public extension Pathfinding where Coordinate == Point, Cost == Int {
     func costToMove(from: Point, to: Point) -> Int {
         1
     }
 
-    func hScore(from: Point, to: Point) -> Int {
+    func distance(from: Point, to: Point) -> Int {
         from.distance(to: to)
     }
 }
 
 // MARK: - implementation
 
-public final class AStarPathfinder<PF: Pathfinding> {
-    public typealias Coordinate = PF.Coordinate
-    public typealias Cost = PF.Cost
+public final class AStarPathfinder<Map: Pathfinding> {
+    public typealias Coordinate = Map.Coordinate
+    public typealias Cost = Map.Cost
 
     private final class PathNode: Hashable, Comparable, CustomDebugStringConvertible {
         let coordinate: Coordinate
@@ -67,9 +83,9 @@ public final class AStarPathfinder<PF: Pathfinding> {
         }
     }
 
-    private let map: PF
+    private let map: Map
 
-    public init(map: PF) {
+    public init(map: Map) {
         self.map = map
     }
 
@@ -99,7 +115,7 @@ public final class AStarPathfinder<PF: Pathfinding> {
 
                 if explored[neighbor] == nil || explored[neighbor]! > newcost {
                     explored[neighbor] = newcost
-                    let hScore = map.hScore(from: currentCoordinate, to: neighbor)
+                    let hScore = map.distance(from: currentCoordinate, to: neighbor)
                     let node = PathNode(coordinate: neighbor, parent: currentNode, moveCost: moveCost, hScore: hScore)
                     frontier.insert(node)
                 }

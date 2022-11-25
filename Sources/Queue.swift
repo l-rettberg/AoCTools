@@ -15,7 +15,7 @@ public struct Queue<Element> {
     /// Return the number of element in this queue
     public var count: Int { storage.count }
 
-    /// A Boolean value indication whether the stack is empty
+    /// A Boolean value indication whether the queue is empty
     public var isEmpty: Bool { storage.isEmpty }
 
     /// Add an element to the end of the queue
@@ -28,10 +28,10 @@ public struct Queue<Element> {
     }
 
     /// Remove an element from the top of the queue and return it.
-    /// Popping from an empty queue results in a crash.
+    /// For an empty queue, return `nil`.
     @discardableResult
-    public mutating func pop() -> Element {
-        storage.removeFirst()!
+    public mutating func pop() -> Element? {
+        storage.removeFirst()
     }
 
     /// Return the top element of the queue without removing it.

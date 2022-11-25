@@ -146,8 +146,7 @@ extension TreeNode {
         var queue = Queue<TreeNode>()
         queue.push(self)
 
-        while !queue.isEmpty {
-            let current = queue.pop()
+        while let current = queue.pop() {
             Swift.print("checking \(current.value)")
             if predicate(current.value) {
                 return current
@@ -163,8 +162,7 @@ extension TreeNode {
         var queue = Queue<TreeNode>()
         queue.push(self)
 
-        while !queue.isEmpty {
-            let current = queue.pop()
+        while let current = queue.pop() {
             if predicate(current.value) {
                 result.append(current)
             }

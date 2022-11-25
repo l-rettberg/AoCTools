@@ -37,4 +37,25 @@ final class ArrayTests: XCTestCase {
         chunks = numbers.chunked(by: { $0 <= $1 })
         XCTAssertEqual(chunks, [[10, 40, 40], [10]])
     }
+
+    func testSort() throws {
+        struct Foo: Equatable {
+            let x: Int
+        }
+
+        var array = [ Foo(x: 100), Foo(x: 1)]
+        XCTAssertEqual(array.sorted(by: \.x), array.reversed())
+
+        array = [ Foo(x: 1), Foo(x: 2)]
+        array.sort(by: \.x, using: >)
+        XCTAssertEqual(array[0].x, 2)
+    }
+
+    func testMedian() throws {
+        XCTAssertEqual([1, 1, 3, 5, 8].median(), 3)
+        XCTAssertEqual([1.0, 1.0, 3.0, 5.0, 8.0].median(), 3.0)
+
+        XCTAssertEqual([1, 1, 3, 5, 8, 11].median(), 4)
+        XCTAssertEqual([1.0, 1.0, 3.0, 5.0, 8.0, 11.0].median(), 4.0)
+    }
 }
