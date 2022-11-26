@@ -51,6 +51,16 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(array[0].x, 2)
     }
 
+    func testMinMax() throws {
+        struct Foo: Equatable {
+            let x: Int
+        }
+
+        let array = [ Foo(x: 100), Foo(x: 1)]
+        XCTAssertEqual(array.min(of: \.x), 1)
+        XCTAssertEqual(array.max(of: \.x), 100)
+    }
+
     func testMedian() throws {
         XCTAssertEqual([1, 1, 3, 5, 8].median(), 3)
         XCTAssertEqual([1.0, 1.0, 3.0, 5.0, 8.0].median(), 3.0)
