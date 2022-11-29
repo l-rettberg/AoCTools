@@ -68,4 +68,18 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual([1, 1, 3, 5, 8, 11].median(), 4)
         XCTAssertEqual([1.0, 1.0, 3.0, 5.0, 8.0, 11.0].median(), 4.0)
     }
+
+    func testDictionary() throws {
+        struct Foo: Equatable {
+            let x: Int
+        }
+
+        let array = [ Foo(x: 100), Foo(x: 1) ]
+
+        let dict = array.mapped(by: \.x)
+
+        XCTAssertEqual(dict[1]?.x, 1)
+        XCTAssertEqual(dict[100]?.x, 100)
+        XCTAssertEqual(dict[2], nil)
+    }
 }
