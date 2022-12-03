@@ -48,15 +48,15 @@ extension String {
 // subscripts
 extension String {
     public subscript(index: Int) -> String {
-        get { charAt(index) }
+        charAt(index)
     }
 
     public subscript(range: ClosedRange<Int>) -> String {
-        get { substring(range.lowerBound, range.upperBound - range.lowerBound + 1) }
+        substring(range.lowerBound, range.upperBound - range.lowerBound + 1)
     }
 
     public subscript(range: Range<Int>) -> String {
-        get { substring(range.lowerBound, range.upperBound - range.lowerBound)  }
+        substring(range.lowerBound, range.upperBound - range.lowerBound)
     }
 }
 

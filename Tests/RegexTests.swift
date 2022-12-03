@@ -36,7 +36,6 @@ class RegexTests: XCTestCase {
         XCTAssertEqual(matches2, ["oahfm", "3994"])
     }
 
-
     func testRegex4() throws {
         let regex = Regex(pattern: #"(.*) (.*) (-?\d*) if (.*) (.*) (-?\d*)"#)
         let matches = regex.matches(in: "b inc 5 if a > 1")

@@ -6,8 +6,8 @@
 
 public class TreeNode<Value> {
     public let value: Value
-    private(set) public var children: [TreeNode]
-    private(set) public var parent: TreeNode?
+    public private(set) var children: [TreeNode]
+    public private(set) var parent: TreeNode?
 
     public var count: Int {
         1 + children.reduce(0) { $0 + $1.count }
@@ -62,7 +62,7 @@ public class TreeNode<Value> {
     }
 
     public func reduce<Result>(into result: Result,
-                               _ updateAccumulatingResult: (inout Result, Value) -> (Void)
+                               _ updateAccumulatingResult: (inout Result, Value) -> Void
     ) -> Result {
         var result = result
         updateAccumulatingResult(&result, value)
@@ -156,8 +156,7 @@ extension TreeNode {
         return nil
     }
 
-    public func breadthFirstSearchAll(_ predicate: (Value) -> Bool) -> [TreeNode]
-    {
+    public func breadthFirstSearchAll(_ predicate: (Value) -> Bool) -> [TreeNode] {
         var result = [TreeNode]()
         var queue = Queue<TreeNode>()
         queue.push(self)
@@ -200,4 +199,3 @@ extension TreeNode where Value: CustomStringConvertible {
         }
     }
 }
-

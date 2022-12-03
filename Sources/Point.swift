@@ -19,11 +19,11 @@ public struct Point: Hashable {
         Point(x + point.x, y + point.y)
     }
 
-    public static func +(_ lhs: Point, _ rhs: Point) -> Point {
+    public static func + (_ lhs: Point, _ rhs: Point) -> Point {
         lhs.add(rhs)
     }
 
-    public static func *(_ lhs: Point, _ rhs: Int) -> Point {
+    public static func * (_ lhs: Point, _ rhs: Int) -> Point {
         Point(lhs.x * rhs, lhs.y * rhs)
     }
 

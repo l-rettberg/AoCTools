@@ -38,8 +38,7 @@ public final class Timer {
         print("Total time: \(formatted(Self.total))")
     }
 
-    static private func formatted(_ interval: TimeInterval) -> String {
+    private static func formatted(_ interval: TimeInterval) -> String {
         return "\(formatter.string(for: interval * 1000)!)ms"
     }
 }
-

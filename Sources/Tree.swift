@@ -14,7 +14,7 @@ public class Tree<T> {
     public var count: Int {
         root.count
     }
-    
+
     public init(root: Node) {
         self.root = root
     }
@@ -30,7 +30,7 @@ public class Tree<T> {
     }
 
     public func reduce<Result>(into result: Result,
-                               _ updateAccumulatingResult: (inout Result, T) -> (Void)
+                               _ updateAccumulatingResult: (inout Result, T) -> Void
     ) -> Result {
         root.reduce(into: result, updateAccumulatingResult)
     }
@@ -93,7 +93,7 @@ extension Tree where T: Equatable {
             j -= 1
         }
 
-        return path1[i+1]
+        return path1[i + 1]
     }
 
     private func path(from value: T, to node: Node) -> [Node] {

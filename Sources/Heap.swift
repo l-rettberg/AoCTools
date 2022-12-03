@@ -75,11 +75,11 @@ public struct Heap<Element> where Element: Comparable {
     }
 
     private func rightChildIndex(of index: Int) -> Int {
-        return (2 * index) + 2
+        (2 * index) + 2
     }
 
     private func parentIndex(of index: Int) -> Int {
-        return (index - 1) / 2
+        (index - 1) / 2
     }
 
     private func highestPriorityIndex(of parentIndex: Int, and childIndex: Int) -> Int {

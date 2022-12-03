@@ -37,7 +37,7 @@ public enum Hex {
             Point(q + point.q, r + point.r, s + point.s)
         }
 
-        public static func +(_ lhs: Point, _ rhs: Point) -> Point {
+        public static func + (_ lhs: Point, _ rhs: Point) -> Point {
             lhs.add(rhs)
         }
 
@@ -46,11 +46,11 @@ public enum Hex {
         }
 
         public func distance(to point: Point = .zero) -> Int {
-            return (abs(q - point.q) + abs(r - point.r) + abs(s - point.s)) / 2
+            (abs(q - point.q) + abs(r - point.r) + abs(s - point.s)) / 2
         }
 
         public var description: String {
-            return "\(q),\(r),\(s)"
+            "\(q),\(r),\(s)"
         }
 
         public func neighbors(orientation: Orientation) -> [Point] {

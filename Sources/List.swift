@@ -10,8 +10,8 @@ public struct List<Element> {
 
     public class Node {
         public let value: Element
-        public fileprivate(set) var next: Node? = nil
-        public fileprivate(set) var prev: Node? = nil
+        public fileprivate(set) var next: Node?
+        public fileprivate(set) var prev: Node?
 
         init(_ value: Element) {
             self.value = value
@@ -79,7 +79,10 @@ public struct List<Element> {
     /// Remove and return the element at the front of the list
     @discardableResult
     public mutating func removeFirst() -> Element? {
-        guard head != nil else { return nil }
+        guard head != nil else {
+            return nil
+        }
+
         makeUnique()
         count -= 1
         let headNode = head
@@ -96,7 +99,9 @@ public struct List<Element> {
     /// Remove and return the element at the end of the list
     @discardableResult
     public mutating func removeLast() -> Element? {
-        guard tail != nil else { return nil }
+        guard tail != nil else {
+            return nil
+        }
 
         makeUnique()
         count -= 1
@@ -136,8 +141,8 @@ public struct List<Element> {
         }
     }
 
-    public private(set) var head: Node? = nil
-    public private(set) var tail: Node? = nil {
+    public private(set) var head: Node?
+    public private(set) var tail: Node? {
         didSet { sentinel.tail = tail }
     }
 
@@ -164,10 +169,12 @@ public struct List<Element> {
     }
 
     private mutating func makeUnique() {
-        guard !isUnique else { return }
+        guard !isUnique else {
+            return
+        }
 
-        var newHead: Node? = nil
-        var newTail: Node? = nil
+        var newHead: Node?
+        var newTail: Node?
 
         var node = head
         while node != nil {

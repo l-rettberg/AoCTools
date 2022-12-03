@@ -18,6 +18,7 @@ public struct Triple<T, U, V> {
         self.third = third
     }
 
+    // swiftlint:disable large_tuple
     public init(_ value: (T, U, V)) {
         self.first = value.0
         self.second = value.1

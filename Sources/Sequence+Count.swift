@@ -11,3 +11,9 @@ extension Sequence {
         }
     }
 }
+
+extension Sequence {
+    public func sumOf(_ keyPath: KeyPath<Element, Int>) -> Int {
+        reduce(0) { $0 + $1[keyPath: keyPath] }
+    }
+}

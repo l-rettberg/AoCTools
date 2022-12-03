@@ -20,11 +20,11 @@ public struct Point3: Hashable {
         Point3(x + point.x, y + point.y, z + point.z)
     }
 
-    public static func +(_ lhs: Point3, _ rhs: Point3) -> Point3 {
+    public static func + (_ lhs: Point3, _ rhs: Point3) -> Point3 {
         lhs.add(rhs)
     }
 
-    public static func *(_ lhs: Point3, _ rhs: Int) -> Point3 {
+    public static func * (_ lhs: Point3, _ rhs: Int) -> Point3 {
         Point3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs)
     }
 
@@ -98,6 +98,7 @@ extension Point3 {
         case orthogonal, diagonal, all
     }
 
+    // swiftlint:disable comma
     private static let orthogonalOffsets = [
         Point3(-1,  0,  0),
         Point3( 0, -1,  0),
@@ -129,6 +130,7 @@ extension Point3 {
         Point3( 1,  1, -1),
         Point3( 1,  1,  1)
     ]
+    // swiftlint:enable comma
 
     private static let allOffsets = Self.orthogonalOffsets + Self.diagonalOffsets
 

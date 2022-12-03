@@ -22,7 +22,7 @@ public class CircularBuffer<T> {
         }
     }
 
-    private var current: Node? = nil
+    private var current: Node?
 
     public init() {}
 
@@ -65,6 +65,7 @@ public class CircularBuffer<T> {
         count -= 1
         let node = current
 
+        // swiftlint:disable:next empty_count
         if count == 0 {
             current = nil
         } else {

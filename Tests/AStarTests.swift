@@ -23,11 +23,14 @@ class AStarTests: XCTestCase {
         }
 
         func neighbors(for point: Point) -> [Point] {
-            point.neighbors(adjacency: adjacency).filter {
-                $0.x >= 0 && $0.x <= grid.maxX && $0.y >= 0 && $0.y <= grid.maxY
-            }.filter {
-                grid.points[$0] == false
-            }
+            point
+                .neighbors(adjacency: adjacency)
+                .filter {
+                    $0.x >= 0 && $0.x <= grid.maxX && $0.y >= 0 && $0.y <= grid.maxY
+                }
+                .filter {
+                    grid.points[$0] == false
+                }
         }
 
         func costToMove(from: Point, to: Point) -> Int {
@@ -53,8 +56,8 @@ class AStarTests: XCTestCase {
 
         XCTAssertEqual(path.count, 13)
         XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(9,4)))
-        XCTAssertTrue(path.contains(Point(9,2)))
+        XCTAssertTrue(path.contains(Point(9, 4)))
+        XCTAssertTrue(path.contains(Point(9, 2)))
     }
 
     func testPathfindingDiagonal() throws {
@@ -71,14 +74,14 @@ class AStarTests: XCTestCase {
 
         XCTAssertEqual(path.count, 12)
         XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(1,1)))
-        XCTAssertTrue(path.contains(Point(2,0)))
-        XCTAssertTrue(path.contains(Point(9,3)))
-        XCTAssertTrue(path.contains(Point(10,2)))
-        XCTAssertTrue(path.contains(Point(10,4)))
+        XCTAssertTrue(path.contains(Point(1, 1)))
+        XCTAssertTrue(path.contains(Point(2, 0)))
+        XCTAssertTrue(path.contains(Point(9, 3)))
+        XCTAssertTrue(path.contains(Point(10, 2)))
+        XCTAssertTrue(path.contains(Point(10, 4)))
 
-        XCTAssertFalse(path.contains(Point(1,0)))
-        XCTAssertFalse(path.contains(Point(0,1)))
+        XCTAssertFalse(path.contains(Point(1, 0)))
+        XCTAssertFalse(path.contains(Point(0, 1)))
     }
 
     func testPathfindingSnake() throws {
@@ -95,9 +98,9 @@ class AStarTests: XCTestCase {
 
         XCTAssertEqual(path.count, 31)
         XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(9,4)))
-        XCTAssertTrue(path.contains(Point(9,2)))
-        XCTAssertTrue(path.contains(Point(0,3)))
+        XCTAssertTrue(path.contains(Point(9, 4)))
+        XCTAssertTrue(path.contains(Point(9, 2)))
+        XCTAssertTrue(path.contains(Point(0, 3)))
     }
 
     func testPathfindingBlocked() throws {

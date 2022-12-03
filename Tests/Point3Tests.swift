@@ -16,7 +16,7 @@ class Point3Tests: XCTestCase {
         XCTAssertEqual(zero.y, 0)
         XCTAssertEqual(zero.z, 0)
 
-        let one = Point3(1, 1,1 )
+        let one = Point3(1, 1, 1)
         XCTAssertEqual(one.x, 1)
         XCTAssertEqual(one.y, 1)
         XCTAssertEqual(one.z, 1)

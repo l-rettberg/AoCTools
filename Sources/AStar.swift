@@ -51,7 +51,7 @@ public final class AStarPathfinder<Map: Pathfinding> {
     public typealias Coordinate = Map.Coordinate
     public typealias Cost = Map.Cost
 
-    private final class PathNode: Hashable, Comparable, CustomDebugStringConvertible {
+    private final class PathNode: Comparable, CustomDebugStringConvertible {
         let coordinate: Coordinate
         let parent: PathNode?
 
@@ -66,11 +66,7 @@ public final class AStarPathfinder<Map: Pathfinding> {
             self.hScore = hScore
         }
 
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(coordinate)
-        }
-
-        static func ==(lhs: PathNode, rhs: PathNode) -> Bool {
+        static func == (lhs: PathNode, rhs: PathNode) -> Bool {
             lhs.coordinate == rhs.coordinate
         }
 

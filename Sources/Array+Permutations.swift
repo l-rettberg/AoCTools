@@ -24,7 +24,7 @@ extension Array {
         } else {
             for i in 0 ..< n {
                 generate(n: n - 1, data: &data, closure: closure)
-                if n % 2 == 0 {
+                if n.isMultiple(of: 2) {
                     data.swapAt(i, n - 1)
                 } else {
                     data.swapAt(0, n - 1)
