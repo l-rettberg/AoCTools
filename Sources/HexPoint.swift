@@ -62,11 +62,11 @@ public enum Hex {
             }
         }
 
-        public func moved(_ direction: PointyDirection) -> Point {
+        public func moved(to direction: PointyDirection) -> Point {
             self + direction.offset
         }
 
-        public func moved(_ direction: FlatDirection) -> Point {
+        public func moved(to direction: FlatDirection) -> Point {
             self + direction.offset
         }
     }

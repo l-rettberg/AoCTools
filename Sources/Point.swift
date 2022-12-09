@@ -27,8 +27,14 @@ public struct Point: Hashable {
         Point(lhs.x * rhs, lhs.y * rhs)
     }
 
+    // manhattan distance
     public func distance(to point: Point = .zero) -> Int {
         abs(x - point.x) + abs(y - point.y)
+    }
+
+    // aka chess distance
+    public func chebyshevDistance(to point: Point = .zero) -> Int {
+        max(abs(x - point.x), abs(y - point.y))
     }
 }
 
@@ -152,7 +158,7 @@ extension Point {
         return offsets.map { add($0.offset) }
     }
 
-    public func moved(_ direction: Direction) -> Point {
+    public func moved(to direction: Direction) -> Point {
         self + direction.offset
     }
 }

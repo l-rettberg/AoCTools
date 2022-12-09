@@ -28,8 +28,14 @@ public struct Point3: Hashable {
         Point3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs)
     }
 
+    // manhattan distance
     public func distance(to point: Point3 = .zero) -> Int {
         abs(x - point.x) + abs(y - point.y) + abs(z - point.z)
+    }
+
+    // aka chess distance
+    public func chebyshevDistance(to point: Point3 = .zero) -> Int {
+        max(abs(x - point.x), abs(y - point.y), abs(z - point.z))
     }
 }
 
