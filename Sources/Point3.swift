@@ -10,30 +10,36 @@ public struct Point3: Hashable {
 
     public static let zero = Point3(0, 0, 0)
 
+    @inlinable
     public init(_ x: Int, _ y: Int, _ z: Int) {
         self.x = x
         self.y = y
         self.z = z
     }
 
+    @inlinable
     public func add(_ point: Point3) -> Point3 {
         Point3(x + point.x, y + point.y, z + point.z)
     }
 
+    @inlinable
     public static func + (_ lhs: Point3, _ rhs: Point3) -> Point3 {
         lhs.add(rhs)
     }
 
+    @inlinable
     public static func * (_ lhs: Point3, _ rhs: Int) -> Point3 {
         Point3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs)
     }
 
     // manhattan distance
+    @inlinable
     public func distance(to point: Point3 = .zero) -> Int {
         abs(x - point.x) + abs(y - point.y) + abs(z - point.z)
     }
 
     // aka chess distance
+    @inlinable
     public func chebyshevDistance(to point: Point3 = .zero) -> Int {
         max(abs(x - point.x), abs(y - point.y), abs(z - point.z))
     }

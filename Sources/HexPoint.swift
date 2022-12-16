@@ -25,6 +25,7 @@ public enum Hex {
     public struct Point: Hashable, CustomStringConvertible {
         public let q, r, s: Int
 
+        @inlinable
         public init(_ q: Int, _ r: Int, _ s: Int) {
             self.q = q
             self.r = r
@@ -33,18 +34,22 @@ public enum Hex {
 
         public static let zero = Point(0, 0, 0)
 
+        @inlinable
         public func add(_ point: Point) -> Point {
             Point(q + point.q, r + point.r, s + point.s)
         }
 
+        @inlinable
         public static func + (_ lhs: Point, _ rhs: Point) -> Point {
             lhs.add(rhs)
         }
 
+        @inlinable
         public func move(to direction: HexDirection) -> Point {
             self + direction.offset
         }
 
+        @inlinable
         public func distance(to point: Point = .zero) -> Int {
             (abs(q - point.q) + abs(r - point.r) + abs(s - point.s)) / 2
         }
@@ -62,10 +67,12 @@ public enum Hex {
             }
         }
 
+        @inlinable
         public func moved(to direction: PointyDirection) -> Point {
             self + direction.offset
         }
 
+        @inlinable
         public func moved(to direction: FlatDirection) -> Point {
             self + direction.offset
         }

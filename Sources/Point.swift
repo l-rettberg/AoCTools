@@ -10,29 +10,35 @@ public struct Point: Hashable {
 
     public static let zero = Point(0, 0)
 
+    @inlinable
     public init(_ x: Int, _ y: Int) {
         self.x = x
         self.y = y
     }
 
+    @inlinable
     public func add(_ point: Point) -> Point {
         Point(x + point.x, y + point.y)
     }
 
+    @inlinable
     public static func + (_ lhs: Point, _ rhs: Point) -> Point {
         lhs.add(rhs)
     }
 
+    @inlinable
     public static func * (_ lhs: Point, _ rhs: Int) -> Point {
         Point(lhs.x * rhs, lhs.y * rhs)
     }
 
     // manhattan distance
+    @inlinable
     public func distance(to point: Point = .zero) -> Int {
         abs(x - point.x) + abs(y - point.y)
     }
 
     // aka chess distance
+    @inlinable
     public func chebyshevDistance(to point: Point = .zero) -> Int {
         max(abs(x - point.x), abs(y - point.y))
     }
@@ -158,6 +164,7 @@ extension Point {
         return offsets.map { add($0.offset) }
     }
 
+    @inlinable
     public func moved(to direction: Direction) -> Point {
         self + direction.offset
     }
