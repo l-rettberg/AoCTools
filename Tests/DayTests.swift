@@ -1,8 +1,7 @@
 //
 //  DayTests.swift
 //  
-//
-//  Created by Gereon Steffens on 06.08.22.
+//  Advent of Code tools
 //
 
 import XCTest

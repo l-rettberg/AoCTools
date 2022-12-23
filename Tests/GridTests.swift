@@ -1,8 +1,7 @@
 //
 //  GridTests.swift
 //  
-//
-//  Created by Gereon Steffens on 04.11.22.
+//  Advent of Code tools
 //
 
 import XCTest

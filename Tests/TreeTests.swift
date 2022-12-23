@@ -1,8 +1,7 @@
 //
 //  TreeTests.swift
 //  
-//
-//  Created by Gereon Steffens on 07.07.22.
+//  Advent of Code tools
 //
 
 import XCTest

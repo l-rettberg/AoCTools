@@ -1,8 +1,7 @@
 //
-//  File.swift
+//  Set.swift
 //  
-//
-//  Created by Gereon Steffens on 17.09.22.
+//  Advent of Code Tools
 //
 
 import Foundation

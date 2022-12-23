@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import RegexBuilder
 
 extension String {
     public func trimmed() -> String {
@@ -72,5 +73,16 @@ extension String {
 
     public func tokenized(separator: String = " ") -> [String] {
         self.components(separatedBy: separator).map { String($0) }
+    }
+
+    private static let regex = Regex {
+        Capture {
+            Optionally("-")
+            ZeroOrMore(.digit)
+        }
+    }
+
+    public func allInts() -> [Int] {
+        ranges(of: Self.regex).compactMap { Int(self[$0]) }
     }
 }

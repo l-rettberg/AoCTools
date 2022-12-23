@@ -1,8 +1,7 @@
 //
 //  DataTests.swift
 //  
-//
-//  Created by Gereon Steffens on 05.08.22.
+//  Advent of Code tools
 //
 
 import XCTest

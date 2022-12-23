@@ -1,8 +1,7 @@
 //
 //  ListTests.swift
 //  
-//
-//  Created by Gereon Steffens on 09.01.22.
+//  Advent of Code tools
 //
 
 import XCTest

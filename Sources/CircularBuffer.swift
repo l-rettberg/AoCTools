@@ -1,8 +1,7 @@
 //
 //  CircularBuffer.swift
 //  
-//
-//  Created by Gereon Steffens on 21.10.22.
+//  Advent of Code tools
 //
 
 import Foundation

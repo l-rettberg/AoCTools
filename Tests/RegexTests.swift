@@ -1,8 +1,7 @@
 //
 //  RegexTests.swift
 //  
-//
-//  Created by Gereon Steffens on 04.08.22.
+//  Advent of Code tools
 //
 
 import XCTest

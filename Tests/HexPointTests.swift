@@ -1,8 +1,7 @@
 //
 //  HexPointTests.swift
 //  
-//
-//  Created by Gereon Steffens on 19.07.22.
+//  Advent of Code tools
 //
 
 import XCTest

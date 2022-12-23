@@ -1,8 +1,7 @@
 //
 //  GCDTests.swift
 //  
-//
-//  Created by Gereon Steffens on 11.12.22.
+//  Advent of Code tools
 //
 
 import XCTest
