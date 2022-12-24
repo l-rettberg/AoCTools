@@ -31,6 +31,10 @@ public protocol Pathfinding {
     ///   - to: The coordinate to move to
     /// - Returns: The distance between the coordinates
     func distance(from: Coordinate, to: Coordinate) -> Cost
+
+    /// Check if we've reached our destination, only implement this if comparing
+    /// coordinates using == does not work
+    func goalReached(at: Coordinate, goal: Coordinate) -> Bool
 }
 
 // default implementation for simple maps:
@@ -42,6 +46,12 @@ public extension Pathfinding where Coordinate == Point, Cost == Int {
 
     func distance(from: Point, to: Point) -> Int {
         from.distance(to: to)
+    }
+}
+
+public extension Pathfinding where Coordinate: Equatable {
+    func goalReached(at coordinate: Coordinate, goal: Coordinate) -> Bool {
+        coordinate == goal
     }
 }
 
@@ -95,7 +105,7 @@ public final class AStarPathfinder<Map: Pathfinding> {
         while let currentNode = frontier.pop() {
             let currentCoordinate = currentNode.coordinate
 
-            if currentCoordinate == destination {
+            if map.goalReached(at: currentCoordinate, goal: destination) {
                 var result = [Coordinate]()
                 var node: PathNode? = currentNode
                 while let n = node {
