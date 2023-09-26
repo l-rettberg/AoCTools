@@ -5,13 +5,13 @@
 //
 
 public protocol Runnable {
-    init(rawInput: String?)
+    init(input: String?)
     func run()
 }
 
 public protocol AOCDay: Runnable {
     var day: String { get }
-    static var rawInput: String { get }
+    static var input: String { get }
 
     associatedtype Solution1
     func part1() -> Solution1
@@ -21,7 +21,7 @@ public protocol AOCDay: Runnable {
 }
 
 extension AOCDay {
-    public static var rawInput: String { "" }
+    public static var input: String { "" }
     public var day: String { String("\(Self.self)".suffix(2)) }
 
     public func run() {
