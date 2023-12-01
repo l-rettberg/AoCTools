@@ -33,6 +33,15 @@ class StringTests: XCTestCase {
         XCTAssertEqual(str.indicesOf("xx"), [])
     }
 
+    func testLastIndex() throws {
+        let str = "abc"
+
+        XCTAssertEqual(str.lastIndexOf("b"), 1)
+        XCTAssertEqual(str.lastIndexOf("x"), nil)
+
+        XCTAssertEqual("abbc".lastIndexOf("b"), 2)
+    }
+
     func testSubscript() throws {
         let str = "abcdef"
 

@@ -44,6 +44,14 @@ extension String {
         }
         return result
     }
+
+    public func lastIndexOf(_ substr: String) -> Int? {
+        guard let range = self.range(of: substr, options: .backwards) else {
+            return nil
+        }
+
+        return distance(from: startIndex, to: range.lowerBound)
+    }
 }
 
 // subscripts
