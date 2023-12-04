@@ -85,4 +85,20 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(dict[100]?.x, 100)
         XCTAssertEqual(dict[2], nil)
     }
+
+    func testPairs() throws {
+        let pairs = [1,2,3,4].adjacentPairs()
+        // [(1,2), (2,3), (3,4)])
+        XCTAssertEqual(pairs.count, 3)
+        XCTAssertEqual(pairs[0].0, 1)
+        XCTAssertEqual(pairs[0].1, 2)
+        XCTAssertEqual(pairs[1].0, 2)
+        XCTAssertEqual(pairs[1].1, 3)
+        XCTAssertEqual(pairs[2].0, 3)
+        XCTAssertEqual(pairs[2].1, 4)
+    }
+
+    func testMakeSet() throws {
+        XCTAssertEqual([1,2,3].makeSet(), Set([1,2,3]))
+    }
 }

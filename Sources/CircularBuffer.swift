@@ -4,8 +4,6 @@
 //  Advent of Code tools
 //
 
-import Foundation
-
 /// Circular buffer of unlimited size
 /// Keeps track of a "current" position which can be moved forwards/clockwise or backwards/counterclockwise
 public class CircularBuffer<T> {

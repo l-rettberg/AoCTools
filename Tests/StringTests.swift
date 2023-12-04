@@ -61,10 +61,30 @@ class StringTests: XCTestCase {
         XCTAssertEqual(str.substring(3, 2), "de")
     }
 
+    func testSubstringAfter() throws {
+        XCTAssertEqual("foo:bar".substring(after: ":"), "bar")
+    }
+
     func testRangeSubscript() throws {
         let str = "abcdef"
 
         XCTAssertEqual(str[0...1], "ab")
         XCTAssertEqual(str[3..<5], "de")
+    }
+
+    func testInts() throws {
+        XCTAssertEqual("1,2,3".asInts(), [1,2,3])
+        XCTAssertEqual("1, 2, 3".asInts(), [1,2,3])
+    }
+
+    func testTokenized() throws {
+        XCTAssertEqual("1;2;3".tokenized(separator: ";"), ["1", "2", "3"])
+        XCTAssertEqual("1 - 2 - 3".tokenized(separator: "-"), ["1", "2", "3"])
+    }
+
+    func testAllInt() throws {
+        XCTAssertEqual("1,2,3".allInts(), [1,2,3])
+        XCTAssertEqual("1 red -2 blue 3green".allInts(), [1,-2,3])
+        XCTAssertEqual("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts(), [1,1,2,3,4])
     }
 }

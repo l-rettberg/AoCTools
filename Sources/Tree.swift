@@ -4,8 +4,6 @@
 //  Advent of Code Tools
 //
 
-import Foundation
-
 public class Tree<T> {
     public typealias Node = TreeNode<T>
 

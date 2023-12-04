@@ -4,8 +4,6 @@
 //  Advent of Code Tools
 //
 
-import Foundation
-
 extension Set {
     public static func + (lhs: Set, rhs: Set) -> Set {
         lhs.union(rhs)

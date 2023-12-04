@@ -4,8 +4,6 @@
 //  Advent of Code tools
 //
 
-import Foundation
-
 public struct Triple<T, U, V> {
     public let first: T
     public let second: U

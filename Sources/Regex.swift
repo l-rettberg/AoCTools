@@ -4,8 +4,6 @@
 //  Advent of Code Tools
 //
 
-import Foundation
-
 // swiftlint:disable force_try
 
 public extension Regex where Output == AnyRegexOutput {

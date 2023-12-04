@@ -4,12 +4,11 @@
 //  Advent of Code Tools
 //
 
-import Foundation
 import RegexBuilder
 
 extension String {
     public func trimmed() -> String {
-        trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     public mutating func trim() {
@@ -25,6 +24,12 @@ extension String {
         let end = index(startIndex, offsetBy: start + len)
         let start = index(startIndex, offsetBy: start)
         return String(self[start..<end])
+    }
+
+    public func substring(after separator: String) -> String {
+        guard let index = indexOf(separator) else { return self }
+        let start = self.index(startIndex, offsetBy: index + 1)
+        return String(self[start..<endIndex])
     }
 
     public func indexOf(_ substr: String) -> Int? {
@@ -72,7 +77,7 @@ extension String {
 // splitting
 extension String {
     public var lines: [String] {
-        components(separatedBy: "\n")
+        split(whereSeparator: \.isNewline).map { String($0) }
     }
 
     public func asInts(separator: String = ",") -> [Int] {
@@ -80,7 +85,7 @@ extension String {
     }
 
     public func tokenized(separator: String = " ") -> [String] {
-        self.components(separatedBy: separator).map { String($0) }
+        split(separator: separator).map { String($0).trimmed() }
     }
 
     private static let regex = Regex {
