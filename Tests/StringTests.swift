@@ -93,4 +93,11 @@ class StringTests: XCTestCase {
         XCTAssertEqual("foo\n\nbar".lines, ["foo", "", "bar"])
         XCTAssertEqual("\nfoo\n\nbar\n ".lines, ["", "foo", "", "bar", " "])
     }
+
+    func testGrouped() throws {
+        XCTAssertEqual("foo\n\nbar".lines.grouped(by: { $0.isEmpty }), [["foo"], ["bar"]])
+        XCTAssertEqual("foo\nbar\n\nbar\nfoo".lines.grouped(by: { $0.isEmpty }), [["foo", "bar"], ["bar", "foo"]])
+        XCTAssertEqual("foo\n\n\nbar".lines.grouped(by: { $0.isEmpty }), [["foo"], [], ["bar"]])
+        XCTAssertEqual("foo\n\nbar\n\nbaz\n".lines.grouped(by: { $0.isEmpty }), [["foo"], ["bar"], ["baz"]])
+    }
 }

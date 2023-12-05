@@ -27,3 +27,22 @@ extension Array {
         return result
     }
 }
+
+extension Array {
+    public func grouped(by condition: (Element) -> Bool) -> [[Element]] {
+        var tmp = [Element]()
+        var result = [[Element]]()
+        for element in self {
+            if condition(element) {
+                result.append(tmp)
+                tmp.removeAll()
+            } else {
+                tmp.append(element)
+            }
+        }
+        if !tmp.isEmpty {
+            result.append(tmp)
+        }
+        return result
+    }
+}
