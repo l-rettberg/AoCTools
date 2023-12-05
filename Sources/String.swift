@@ -77,7 +77,7 @@ extension String {
 // splitting
 extension String {
     public var lines: [String] {
-        split(whereSeparator: \.isNewline).map { String($0) }
+        split(omittingEmptySubsequences: false, whereSeparator: \.isNewline).map { String($0) }
     }
 
     public func asInts(separator: String = ",") -> [Int] {

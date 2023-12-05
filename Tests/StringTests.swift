@@ -87,4 +87,10 @@ class StringTests: XCTestCase {
         XCTAssertEqual("1 red -2 blue 3green".allInts(), [1,-2,3])
         XCTAssertEqual("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts(), [1,1,2,3,4])
     }
+
+    func testLines() throws {
+        XCTAssertEqual("foo\nbar".lines, ["foo", "bar"])
+        XCTAssertEqual("foo\n\nbar".lines, ["foo", "", "bar"])
+        XCTAssertEqual("\nfoo\n\nbar\n ".lines, ["", "foo", "", "bar", " "])
+    }
 }
