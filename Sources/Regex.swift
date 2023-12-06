@@ -4,15 +4,15 @@
 //  Advent of Code Tools
 //
 
-// swiftlint:disable force_try
-
 public extension Regex where Output == AnyRegexOutput {
 
     init(pattern: String) {
+        // swiftlint:disable:next force_try
         try! self.init(pattern)
     }
 
     func matches(in string: String) -> [String] {
+        // swiftlint:disable:next force_try
         guard let matches = try! self.wholeMatch(in: string) else {
             return []
         }

@@ -89,13 +89,15 @@ extension String {
     }
 
     private static let regex = Regex {
-        Capture {
+        TryCapture {
             Optionally("-")
             ZeroOrMore(.digit)
+        } transform: {
+            Int($0)
         }
     }
 
     public func allInts() -> [Int] {
-        ranges(of: Self.regex).compactMap { Int(self[$0]) }
+        self.matches(of: Self.regex).map(\.output.1)
     }
 }

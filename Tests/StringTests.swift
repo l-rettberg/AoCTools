@@ -73,8 +73,8 @@ class StringTests: XCTestCase {
     }
 
     func testInts() throws {
-        XCTAssertEqual("1,2,3".asInts(), [1,2,3])
-        XCTAssertEqual("1, 2, 3".asInts(), [1,2,3])
+        XCTAssertEqual("1,2,3".asInts(), [1, 2, 3])
+        XCTAssertEqual("1, 2, 3".asInts(), [1, 2, 3])
     }
 
     func testTokenized() throws {
@@ -83,9 +83,9 @@ class StringTests: XCTestCase {
     }
 
     func testAllInt() throws {
-        XCTAssertEqual("1,2,3".allInts(), [1,2,3])
-        XCTAssertEqual("1 red -2 blue 3green".allInts(), [1,-2,3])
-        XCTAssertEqual("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts(), [1,1,2,3,4])
+        XCTAssertEqual("1,2,3".allInts(), [1, 2, 3])
+        XCTAssertEqual("1 red -2 blue 3green".allInts(), [1, -2, 3])
+        XCTAssertEqual("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts(), [1, 1, 2, 3, 4])
     }
 
     func testLines() throws {

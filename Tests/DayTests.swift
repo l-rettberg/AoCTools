@@ -9,7 +9,7 @@ import AoCTools
 
 final class Day98: AOCDay {
     let input: String
-    
+
     init(input: String) {
         self.input = input
     }
@@ -21,7 +21,7 @@ final class Day98: AOCDay {
 final class Day99: AOCDay {
     let input: String
 
-    init(input: String) { 
+    init(input: String) {
         self.input = input
     }
 

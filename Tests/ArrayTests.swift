@@ -87,7 +87,7 @@ final class ArrayTests: XCTestCase {
     }
 
     func testPairs() throws {
-        let pairs = [1,2,3,4].adjacentPairs()
+        let pairs = [1, 2, 3, 4].adjacentPairs()
         // [(1,2), (2,3), (3,4)])
         XCTAssertEqual(pairs.count, 3)
         XCTAssertEqual(pairs[0].0, 1)
@@ -99,6 +99,6 @@ final class ArrayTests: XCTestCase {
     }
 
     func testMakeSet() throws {
-        XCTAssertEqual([1,2,3].makeSet(), Set([1,2,3]))
+        XCTAssertEqual([1, 2, 3].makeSet(), Set([1, 2, 3]))
     }
 }

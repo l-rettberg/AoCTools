@@ -15,10 +15,10 @@ public struct Grid<Value: Drawable> {
     public var yRange: ClosedRange<Int> { minY ... maxY }
 
     public init(points: [Point: Value]) {
-        let minX = points.keys.min { $0.x < $1.x }!.x
-        let maxX = points.keys.max { $0.x < $1.x }!.x
-        let minY = points.keys.min { $0.y < $1.y }!.y
-        let maxY = points.keys.max { $0.y < $1.y }!.y
+        let minX = points.keys.min(of: \.x)!
+        let maxX = points.keys.max(of: \.x)!
+        let minY = points.keys.min(of: \.y)!
+        let maxY = points.keys.max(of: \.y)!
         self.init(points: points, minX: minX, maxX: maxX, minY: minY, maxY: maxY)
     }
 

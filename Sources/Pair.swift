@@ -47,6 +47,6 @@ extension Pair where T == U {
 
 extension Dictionary {
     init(pairs: [Pair<Key, Value>]) {
-        self.init(uniqueKeysWithValues: zip(pairs.map { $0.first }, pairs.map { $0.second }))
+        self.init(uniqueKeysWithValues: zip(pairs.map(\.first), pairs.map(\.second)))
     }
 }

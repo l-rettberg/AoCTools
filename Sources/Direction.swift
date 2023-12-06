@@ -27,27 +27,27 @@ public enum Direction: String, CaseIterable {
 
     public var offset: Point {
         switch self {
-        case .n: return Point(0, -1)
-        case .w: return Point(-1, 0)
-        case .s: return Point(0, 1)
-        case .e: return Point(1, 0)
-        case .nw: return Point(-1, -1)
-        case .ne: return Point(1, -1)
-        case .sw: return Point(-1, 1)
-        case .se: return Point(1, 1)
+        case .n: Point(0, -1)
+        case .w: Point(-1, 0)
+        case .s: Point(0, 1)
+        case .e: Point(1, 0)
+        case .nw: Point(-1, -1)
+        case .ne: Point(1, -1)
+        case .sw: Point(-1, 1)
+        case .se: Point(1, 1)
         }
     }
 
     public var opposite: Direction {
         switch self {
-        case .n: return .s
-        case .s: return .n
-        case .w: return .e
-        case .e: return .w
-        case .ne: return .sw
-        case .nw: return .se
-        case .se: return .nw
-        case .sw: return .ne
+        case .n: .s
+        case .s: .n
+        case .w: .e
+        case .e: .w
+        case .ne: .sw
+        case .nw: .se
+        case .se: .nw
+        case .sw: .ne
         }
     }
 

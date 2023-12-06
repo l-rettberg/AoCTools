@@ -61,9 +61,9 @@ public enum Hex {
         public func neighbors(orientation: Orientation) -> [Point] {
             switch orientation {
             case .flat:
-                return FlatDirection.allCases.map { $0.offset }
+                return FlatDirection.allCases.map(\.offset)
             case .pointy:
-                return PointyDirection.allCases.map { $0.offset }
+                return PointyDirection.allCases.map(\.offset)
             }
         }
 
@@ -84,12 +84,12 @@ public enum Hex {
 
         public var offset: Point {
             switch self {
-            case .ne: return Point(1, -1, 0)
-            case .e: return Point(1, 0, -1)
-            case .se: return Point(0, 1, -1)
-            case .sw: return Point(-1, 1, 0)
-            case .w: return Point(-1, 0, 1)
-            case .nw: return Point(0, -1, 1)
+            case .ne: Point(1, -1, 0)
+            case .e: Point(1, 0, -1)
+            case .se: Point(0, 1, -1)
+            case .sw: Point(-1, 1, 0)
+            case .w: Point(-1, 0, 1)
+            case .nw: Point(0, -1, 1)
             }
         }
 

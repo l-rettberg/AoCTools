@@ -23,6 +23,7 @@ public struct Triple<T, U, V> {
     }
 
     public var tuple: (T, U, V) { (first, second, third) }
+    // swiftlint:enable large_tuple
 }
 
 extension Triple: Equatable where T: Equatable, U: Equatable, V: Equatable {}

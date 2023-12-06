@@ -2,6 +2,7 @@ disabled_rules:
  - identifier_name
  - line_length
  - cyclomatic_complexity
+ - conditional_returns_on_newline
 
 opt_in_rules:
  - array_init
@@ -20,7 +21,6 @@ opt_in_rules:
  - override_in_extension
  - redundant_type_annotation
  - toggle_bool
- - unused_import
  - yoda_condition
  - conditional_returns_on_newline
  - shorthand_optional_binding
