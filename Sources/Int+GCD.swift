@@ -11,11 +11,7 @@
 /// - Returns: the greatest common divisor of `m` and `n`
 public func gcd(_ m: Int, _ n: Int) -> Int {
     let r = m % n
-    if r != 0 {
-        return gcd(n, r)
-    } else {
-        return n
-    }
+    return r != 0 ? gcd(n, r) : n
 }
 
 /// Lowest Common Multiple

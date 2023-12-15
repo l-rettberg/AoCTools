@@ -75,26 +75,23 @@ extension Point {
     }
 
     @inlinable
-    public func moved(to direction: Direction) -> Point {
-        self + direction.offset
-    }
-
-    @inlinable
+    @available(*, deprecated, renamed: "moved(to:)")
     public func moved(_ direction: Direction) -> Point {
         self + direction.offset
     }
 
     @inlinable
-    public func moved(to direction: Direction, steps: Int) -> Point {
+    public func moved(to direction: Direction, steps: Int = 1) -> Point {
         self + direction.offset * steps
     }
 
     @inlinable
+    @available(*, deprecated, renamed: "moved(to:steps:)")
     public func moved(_ direction: Direction, steps: Int) -> Point {
         self + direction.offset * steps
     }
 
-    // return al points between self and `end`. Angle between self and `end` must be a multiple of 45°
+    // return all points between self and `end`. Angle between self and `end` must be a multiple of 45°
     public func line(to end: Point) -> [Point] {
         let dx = (end.x - x).signum()
         let dy = (end.y - y).signum()

@@ -101,4 +101,12 @@ final class ArrayTests: XCTestCase {
     func testMakeSet() throws {
         XCTAssertEqual([1, 2, 3].makeSet(), Set([1, 2, 3]))
     }
+
+    func testCombinations() throws {
+        XCTAssertEqual([1, 2, 3].combinations(of: 2), [[1, 2], [1, 3], [2, 3]])
+        XCTAssertEqual([1, 2, 3, 4].combinations(of: 2), [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]])
+        XCTAssertEqual([1, 2, 3, 4].combinations(of: 3), [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]])
+        XCTAssertEqual([1, 2, 3, 4].combinations(of: 4), [[1, 2, 3, 4]])
+        XCTAssertEqual([1, 2, 3, 4].combinations(of: 5), [])
+    }
 }

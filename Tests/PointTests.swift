@@ -95,15 +95,15 @@ class PointTests: XCTestCase {
 
     func testMoves() throws {
         XCTAssertEqual(Point.zero.moved(to: .n), Point(0, -1))
-        XCTAssertEqual(Point.zero.moved(.up), Point(0, -1))
+        XCTAssertEqual(Point.zero.moved(to: .up), Point(0, -1))
 
         XCTAssertEqual(Point.zero.moved(to: .s), Point(0, 1))
-        XCTAssertEqual(Point.zero.moved(.down), Point(0, 1))
+        XCTAssertEqual(Point.zero.moved(to: .down), Point(0, 1))
 
         XCTAssertEqual(Point.zero.moved(to: .w), Point(-1, 0))
-        XCTAssertEqual(Point.zero.moved(.left), Point(-1, 0))
+        XCTAssertEqual(Point.zero.moved(to: .left), Point(-1, 0))
 
         XCTAssertEqual(Point.zero.moved(to: .e), Point(1, 0))
-        XCTAssertEqual(Point.zero.moved(.right), Point(1, 0))
+        XCTAssertEqual(Point.zero.moved(to: .right), Point(1, 0))
     }
 }
