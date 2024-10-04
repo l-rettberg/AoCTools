@@ -5,7 +5,7 @@
 //
 
 /// A point in a 3d coordinate system.
-public struct Point3: Hashable {
+public struct Point3: Hashable, Sendable {
     public let x, y, z: Int
 
     public static let zero = Point3(0, 0, 0)

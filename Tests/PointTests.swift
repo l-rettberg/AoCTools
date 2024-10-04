@@ -45,14 +45,14 @@ class PointTests: XCTestCase {
         let zero = Point.zero
 
         XCTAssertEqual(zero.neighbors(adjacency: .all).count, 8)
-        XCTAssertEqual(zero.neighbors(adjacency: .orthogonal).count, 4)
-        XCTAssertEqual(zero.neighbors(adjacency: .diagonal).count, 4)
+        XCTAssertEqual(zero.neighbors(adjacency: .cardinal).count, 4)
+        XCTAssertEqual(zero.neighbors(adjacency: .ordinal).count, 4)
 
-        for n in zero.neighbors(adjacency: .orthogonal) {
+        for n in zero.neighbors(adjacency: .cardinal) {
             XCTAssertEqual(n.distance(to: .zero), 1)
         }
 
-        for n in zero.neighbors(adjacency: .diagonal) {
+        for n in zero.neighbors(adjacency: .ordinal) {
             XCTAssertEqual(n.distance(to: .zero), 2)
         }
     }

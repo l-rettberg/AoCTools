@@ -139,6 +139,22 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(node1.first { $0 == 99}, nil)
     }
 
+    func testTreeFindIterative() {
+        let node1 = TreeNode(1)
+        let node2 = TreeNode(2)
+        let node3 = TreeNode(3)
+        let node4 = TreeNode(4)
+        let node5 = TreeNode(1)
+        node2.add(node3)
+        node2.add(node4)
+        node1.add(node2)
+        node1.add(node5)
+
+        XCTAssertEqual(node1.firstIterative { $0 == 1}, node1)
+        XCTAssertEqual(node1.firstIterative { $0 == 4}, node4)
+        XCTAssertEqual(node1.firstIterative { $0 == 99}, nil)
+    }
+
     func testTreeFilter() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
@@ -153,6 +169,22 @@ class TreeTests: XCTestCase {
         XCTAssertEqual(node1.filter { $0 == 1}, [node1, node5])
         XCTAssertEqual(node1.filter { $0 == 4}, [node4])
         XCTAssertEqual(node1.filter { $0 == 99}, [])
+    }
+
+    func testTreeFilterIterative() {
+        let node1 = TreeNode(1)
+        let node2 = TreeNode(2)
+        let node3 = TreeNode(3)
+        let node4 = TreeNode(4)
+        let node5 = TreeNode(1)
+        node2.add(node3)
+        node2.add(node4)
+        node1.add(node2)
+        node1.add(node5)
+
+        XCTAssertEqual(node1.filterIterative { $0 == 1}, [node1, node5])
+        XCTAssertEqual(node1.filterIterative { $0 == 4}, [node4])
+        XCTAssertEqual(node1.filterIterative { $0 == 99}, [])
     }
 
     func testTreeDelete() {

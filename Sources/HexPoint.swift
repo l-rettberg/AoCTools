@@ -22,7 +22,7 @@ public enum Hex {
         case counterclockwise // "left"
     }
 
-    public struct Point: Hashable, CustomStringConvertible {
+    public struct Point: Hashable, CustomStringConvertible, Sendable {
         public let q, r, s: Int
 
         @inlinable

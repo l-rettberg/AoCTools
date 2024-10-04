@@ -12,7 +12,7 @@ class AStarTests: XCTestCase {
         let grid: Grid<Bool>
         let adjacency: Point.Adjacency
 
-        init(_ data: [String], adjacency: Point.Adjacency = .orthogonal) {
+        init(_ data: [String], adjacency: Point.Adjacency = .cardinal) {
             grid = Grid.parse(data)
             self.adjacency = adjacency
         }
@@ -66,7 +66,7 @@ class AStarTests: XCTestCase {
             "##########.",
             "...........",
             "..........."
-        ], adjacency: .diagonal)
+        ], adjacency: .ordinal)
 
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(10, 4))

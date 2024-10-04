@@ -35,7 +35,8 @@ extension Day99 {
 
 // no Day98 extension
 
-class DayTests: XCTestCase {
+@MainActor
+final class DayTests: XCTestCase {
     func testDayWithInput() throws {
         let d99 = Day99(input: Day99.input)
         XCTAssertEqual(d99.day, "99")

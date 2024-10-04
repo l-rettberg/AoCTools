@@ -6,11 +6,13 @@
 
 import Foundation
 
+@MainActor
 public final class Timer {
     private let start = Date().timeIntervalSinceReferenceDate
     private let name: String
 
     private static var total: TimeInterval = 0
+
     private static let formatter: NumberFormatter = {
         let fmt = NumberFormatter()
         fmt.maximumFractionDigits = 3

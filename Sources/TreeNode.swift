@@ -4,6 +4,8 @@
 //  Advent of Code Tools
 //
 
+import Collections
+
 public class TreeNode<Value> {
     public let value: Value
     public private(set) var children: [TreeNode]
@@ -110,10 +112,9 @@ extension TreeNode {
 // MARK: - DFS iterative
 extension TreeNode {
     public func firstIterative(where predicate: (Value) -> Bool) -> TreeNode? {
-        var list = List<TreeNode>()
-        list.append(self)
+        var list = Deque([self])
 
-        while let current = list.removeFirst() {
+        while let current = list.popFirst() {
             if predicate(current.value) {
                 return current
             }
@@ -123,11 +124,10 @@ extension TreeNode {
     }
 
     public func filterIterative(where predicate: (Value) -> Bool) -> [TreeNode] {
-        var list = List<TreeNode>()
+        var list = Deque([self])
         var result = [TreeNode]()
-        list.append(self)
 
-        while let current = list.removeFirst() {
+        while let current = list.popFirst() {
             if predicate(current.value) {
                 result.append(current)
             }
@@ -143,29 +143,26 @@ extension TreeNode {
     /// - Parameter predicate: a closure to check if the `value` of a node is a match
     /// - Returns: the first node that satisfies `predicate`, or `nil` if no such node is found
     public func breadthFirstSearch(_ predicate: (Value) -> Bool) -> TreeNode? {
-        var queue = Queue<TreeNode>()
-        queue.push(self)
+        var queue = Deque([self])
 
-        while let current = queue.pop() {
-            Swift.print("checking \(current.value)")
+        while let current = queue.popFirst() {
             if predicate(current.value) {
                 return current
             }
-            queue.push(contentsOf: current.children)
+            queue.append(contentsOf: current.children)
         }
         return nil
     }
 
     public func breadthFirstSearchAll(_ predicate: (Value) -> Bool) -> [TreeNode] {
         var result = [TreeNode]()
-        var queue = Queue<TreeNode>()
-        queue.push(self)
+        var queue = Deque([self])
 
-        while let current = queue.pop() {
+        while let current = queue.popFirst() {
             if predicate(current.value) {
                 result.append(current)
             }
-            queue.push(contentsOf: current.children)
+            queue.append(contentsOf: current.children)
         }
         return result
     }

@@ -9,6 +9,8 @@
 //  https://github.com/davecom/SwiftPriorityQueue/blob/master/SwiftPriorityQueue/astar.swift
 //
 
+import Collections
+
 public protocol Pathfinding {
     associatedtype Coordinate: Hashable = Point
     associatedtype Cost: Numeric & Comparable = Int
@@ -96,13 +98,13 @@ public final class AStarPathfinder<Map: Pathfinding> {
     }
 
     public func shortestPath(from start: Coordinate, to destination: Coordinate) -> [Coordinate] {
-        var frontier = Heap<PathNode>.minHeap()
+        var frontier = Heap<PathNode>()
         frontier.insert(PathNode(coordinate: start))
 
         var explored = [Coordinate: Cost]()
         explored[start] = 0
 
-        while let currentNode = frontier.pop() {
+        while let currentNode = frontier.popMin() {
             let currentCoordinate = currentNode.coordinate
 
             if map.goalReached(at: currentCoordinate, goal: destination) {

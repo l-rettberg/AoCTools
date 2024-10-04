@@ -4,6 +4,7 @@
 //  Advent of Code Tools
 //
 
+@MainActor
 public protocol Runnable {
     static var input: String { get }
     init(input: String)

@@ -5,7 +5,7 @@
 //
 
 /// A point in a 2d coordinate system.
-public struct Point: Hashable {
+public struct Point: Hashable, Sendable {
     public let x, y: Int
 
     public static let zero = Point(0, 0)
@@ -59,15 +59,20 @@ extension Point {
 
 // MARK: - neighbors
 extension Point {
-    public enum Adjacency {
-        case orthogonal, diagonal, all
+    public enum Adjacency: Sendable {
+        case cardinal
+        case ordinal
+        case all
+
+        static let orthodonal = Adjacency.cardinal
+        static let diagonal = Adjacency.ordinal
     }
 
-    public func neighbors(adjacency: Adjacency = .orthogonal) -> [Point] {
+    public func neighbors(adjacency: Adjacency = .cardinal) -> [Point] {
         let offsets: [Direction]
         switch adjacency {
-        case .orthogonal: offsets = Direction.orthogonal
-        case .diagonal: offsets = Direction.diagonal
+        case .cardinal: offsets = Direction.cardinal
+        case .ordinal: offsets = Direction.ordinal
         case .all: offsets = Direction.allCases
         }
 

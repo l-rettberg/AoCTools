@@ -5,15 +5,18 @@
 //
 
 // MARK: 2d directions
-public enum Turn: CaseIterable {
-    case clockwise // "right"
-    case counterclockwise // "left"
+public enum Turn: CaseIterable, Sendable {
+    /// turn clockwise / right
+    case clockwise
+
+    /// turn counterclockwise / left
+    case counterclockwise
 
     static let right = Turn.clockwise
     static let left = Turn.counterclockwise
 }
 
-public enum Direction: String, CaseIterable {
+public enum Direction: String, CaseIterable, Sendable {
     case n, w, s, e
     case nw, ne, sw, se
 
@@ -22,8 +25,13 @@ public enum Direction: String, CaseIterable {
     public static let left = Direction.w
     public static let right = Direction.e
 
-    public static let orthogonal: [Direction] = [ .n, .w, .s, .e ]
-    public static let diagonal: [Direction] = [ .nw, .ne, .sw, .se ]
+    /// the cardinal / orthogonal directions
+    public static let cardinal: [Direction] = [ .n, .w, .s, .e ]
+    public static let orthogonal = Direction.cardinal
+
+    /// the ordinal / diagonal directions
+    public static let ordinal: [Direction] = [ .nw, .ne, .sw, .se ]
+    public static let diagonal = Direction.ordinal
 
     public var offset: Point {
         switch self {

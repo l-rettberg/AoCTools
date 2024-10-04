@@ -88,16 +88,16 @@ extension String {
         split(separator: separator).map { String($0).trimmed() }
     }
 
-    private static let regex = Regex {
-        TryCapture {
-            Optionally("-")
-            ZeroOrMore(.digit)
-        } transform: {
-            Int($0)
-        }
-    }
-
     public func allInts() -> [Int] {
-        self.matches(of: Self.regex).map(\.output.1)
+        let regex = Regex {
+            TryCapture {
+                Optionally("-")
+                ZeroOrMore(.digit)
+            } transform: {
+                Int($0)
+            }
+        }
+
+        return matches(of: regex).map(\.output.1)
     }
 }

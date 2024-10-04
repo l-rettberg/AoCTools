@@ -6,7 +6,7 @@
 
 /// A simple FIFO collection of elements
 public struct Stack<Element> {
-    private var storage: [Element]
+    public var storage: [Element]
 
     public init() {
         storage = []
@@ -16,16 +16,17 @@ public struct Stack<Element> {
     public var count: Int { storage.count }
 
     /// A Boolean value indication whether the stack is empty
-    public var isEmpty: Bool { storage.isEmpty }
+    @inlinable public var isEmpty: Bool { storage.isEmpty }
 
     /// Add an element at the top of stack.
-    public mutating func push(_ element: Element) {
+    @inlinable public mutating func push(_ element: Element) {
         storage.append(element)
     }
 
     /// Remove the element at the top of the stack and return it.
     /// For an empty stack, return `nil`.
     @discardableResult
+    @inlinable
     public mutating func pop() -> Element? {
         if storage.isEmpty {
             return nil
@@ -35,7 +36,7 @@ public struct Stack<Element> {
 
     /// Return the top element of the stack without removing it.
     /// For an empty stack, return `nil`.
-    public func peek() -> Element? {
+    @inlinable public func peek() -> Element? {
         storage.last
     }
 }

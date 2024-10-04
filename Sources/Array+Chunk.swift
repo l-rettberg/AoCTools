@@ -5,12 +5,6 @@
 //
 
 extension Array {
-    public func chunked(_ size: Int) -> [[Element]] {
-        stride(from: 0, to: count, by: size).map {
-            Array(self[$0 ..< Swift.min($0 + size, count)])
-        }
-    }
-
     public func chunked(by condition: (Element, Element) -> Bool) -> [[Element]] {
         var result = [[Element]]()
         var tmp = [Element]()
