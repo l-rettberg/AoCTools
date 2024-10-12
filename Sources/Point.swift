@@ -64,8 +64,8 @@ extension Point {
         case ordinal
         case all
 
-        static let orthodonal = Adjacency.cardinal
-        static let diagonal = Adjacency.ordinal
+        public static let orthogonal = Adjacency.cardinal
+        public static let diagonal = Adjacency.ordinal
     }
 
     public func neighbors(adjacency: Adjacency = .cardinal) -> [Point] {
