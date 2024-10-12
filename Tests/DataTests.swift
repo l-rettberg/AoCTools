@@ -4,27 +4,29 @@
 //  Advent of Code tools
 //
 
-import XCTest
 import AoCTools
+import Foundation
+import Testing
 
-class DataTests: XCTestCase {
+@Suite
+struct DataTests {
 
-    func testHexByte() throws {
-        XCTAssertEqual(UInt8(0).hex, "00")
-        XCTAssertEqual(UInt8(10).hex, "0a")
-        XCTAssertEqual(UInt8(127).hex, "7f")
-        XCTAssertEqual(UInt8(255).hex, "ff")
+    @Test func testHexByte() throws {
+        #expect(UInt8(0).hex == "00")
+        #expect(UInt8(10).hex == "0a")
+        #expect(UInt8(127).hex == "7f")
+        #expect(UInt8(255).hex == "ff")
     }
 
-    func testHexBytes() throws {
+    @Test func testHexBytes() throws {
         let arr: [UInt8] = [ 0, 1, 10]
-        XCTAssertEqual(arr.hex, "00010a")
+        #expect(arr.hex == "00010a")
     }
 
-    func testHexData() throws {
+    @Test func testHexData() throws {
         let arr: [UInt8] = [ 47, 11, 08, 15 ]
         let data = Data(bytes: arr, count: arr.count)
-        XCTAssertEqual(data.hex, "2f0b080f")
+        #expect(data.hex == "2f0b080f")
     }
 
 }

@@ -4,7 +4,7 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
 final class Day98: AOCDay {
@@ -20,6 +20,7 @@ final class Day98: AOCDay {
 
 final class Day99: AOCDay {
     let input: String
+    let title = "Day99"
 
     init(input: String) {
         self.input = input
@@ -34,35 +35,36 @@ extension Day99 {
 }
 
 // no Day98 extension
-
-@MainActor
-final class DayTests: XCTestCase {
-    func testDayWithInput() throws {
+@MainActor @Suite
+final class DayTests {
+    @Test func testDayWithInput() throws {
         let d99 = Day99(input: Day99.input)
-        XCTAssertEqual(d99.day, "99")
-        XCTAssertEqual(d99.input, Day99.input)
-        XCTAssertEqual(d99.part1(), 99)
-        XCTAssertEqual(d99.part2(), Day99.input)
+        #expect(d99.day == "99")
+        #expect(d99.input == Day99.input)
+        #expect(d99.part1() == 99)
+        #expect(d99.part2() == Day99.input)
 
         let d99b = Day99(input: "testinput")
-        XCTAssertEqual(d99b.day, "99")
-        XCTAssertEqual(d99b.input, "testinput")
-        XCTAssertEqual(d99b.part1(), 99)
-        XCTAssertEqual(d99b.part2(), "testinput")
+        #expect(d99b.day == "99")
+        #expect(d99b.input == "testinput")
+        #expect(d99b.part1() == 99)
+        #expect(d99b.part2() == "testinput")
+        #expect(d99b.title == "Day99")
     }
 
-    func testDayWithoutInput() throws {
+    @Test func testDayWithoutInput() throws {
         let d98 = Day98(input: "test")
-        XCTAssertEqual(d98.day, "98")
-        XCTAssertEqual(d98.input, "test")
-        XCTAssertEqual(Day98.input, "")
-        XCTAssertEqual(d98.part1(), 98)
-        XCTAssertEqual(d98.part2(), "test")
+        #expect(d98.day == "98")
+        #expect(d98.input == "test")
+        #expect(Day98.input.isEmpty)
+        #expect(d98.part1() == 98)
+        #expect(d98.part2() == "test")
+        #expect(d98.title.isEmpty)
 
         let d98b = Day98(input: Day98.input)
-        XCTAssertEqual(d98b.day, "98")
-        XCTAssertEqual(d98b.input, "")
-        XCTAssertEqual(d98b.part1(), 98)
-        XCTAssertEqual(d98b.part2(), "")
+        #expect(d98b.day == "98")
+        #expect(d98b.input.isEmpty)
+        #expect(d98b.part1() == 98)
+        #expect(d98b.part2().isEmpty)
     }
 }

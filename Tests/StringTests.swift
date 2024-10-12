@@ -4,100 +4,101 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-class StringTests: XCTestCase {
-    func testTrim() throws {
+@Suite
+struct StringTests {
+    @Test func testTrim() throws {
         var str = "  abc   "
-        XCTAssertEqual(str.trimmed(), "abc")
+        #expect(str.trimmed() == "abc")
 
         str.trim()
-        XCTAssertEqual(str, "abc")
+        #expect(str == "abc")
     }
 
-    func testIndex() throws {
+    @Test func testIndex() throws {
         let str = "abc"
 
-        XCTAssertEqual(str.indexOf("b"), 1)
-        XCTAssertEqual(str.indexOf("x"), nil)
+        #expect(str.indexOf("b") == 1)
+        #expect(str.indexOf("x") == nil)
     }
 
-    func testIndices() throws {
+    @Test func testIndices() throws {
         let str = "aabbcc"
 
-        XCTAssertEqual(str.indicesOf("ab"), [1])
-        XCTAssertEqual(str.indicesOf("a"), [0, 1])
-        XCTAssertEqual(str.indicesOf("b"), [2, 3])
-        XCTAssertEqual(str.indicesOf("bb"), [2])
-        XCTAssertEqual(str.indicesOf("xx"), [])
+        #expect(str.indicesOf("ab") == [1])
+        #expect(str.indicesOf("a") == [0, 1])
+        #expect(str.indicesOf("b") == [2, 3])
+        #expect(str.indicesOf("bb") == [2])
+        #expect(str.indicesOf("xx").isEmpty)
     }
 
-    func testLastIndex() throws {
+    @Test func testLastIndex() throws {
         let str = "abc"
 
-        XCTAssertEqual(str.lastIndexOf("b"), 1)
-        XCTAssertEqual(str.lastIndexOf("x"), nil)
+        #expect(str.lastIndexOf("b") == 1)
+        #expect(str.lastIndexOf("x") == nil)
 
-        XCTAssertEqual("abbc".lastIndexOf("b"), 2)
+        #expect("abbc".lastIndexOf("b") == 2)
     }
 
-    func testSubscript() throws {
+    @Test func testSubscript() throws {
         let str = "abcdef"
 
-        XCTAssertEqual(str.charAt(0), "a")
-        XCTAssertEqual(str.charAt(1), "b")
-        XCTAssertEqual(str.charAt(5), "f")
+        #expect(str.charAt(0) == "a")
+        #expect(str.charAt(1) == "b")
+        #expect(str.charAt(5) == "f")
 
-        XCTAssertEqual(str[0], "a")
-        XCTAssertEqual(str[1], "b")
-        XCTAssertEqual(str[5], "f")
+        #expect(str[0] == "a")
+        #expect(str[1] == "b")
+        #expect(str[5] == "f")
     }
 
-    func testSubstring() throws {
+    @Test func testSubstring() throws {
         let str = "abcdef"
 
-        XCTAssertEqual(str.substring(0, 2), "ab")
-        XCTAssertEqual(str.substring(3, 2), "de")
+        #expect(str.substring(0, 2) == "ab")
+        #expect(str.substring(3, 2) == "de")
     }
 
-    func testSubstringAfter() throws {
-        XCTAssertEqual("foo:bar".substring(after: ":"), "bar")
+    @Test func testSubstringAfter() throws {
+        #expect("foo:bar".substring(after: ":") == "bar")
     }
 
-    func testRangeSubscript() throws {
+    @Test func testRangeSubscript() throws {
         let str = "abcdef"
 
-        XCTAssertEqual(str[0...1], "ab")
-        XCTAssertEqual(str[3..<5], "de")
+        #expect(str[0...1] == "ab")
+        #expect(str[3..<5] == "de")
     }
 
-    func testInts() throws {
-        XCTAssertEqual("1,2,3".asInts(), [1, 2, 3])
-        XCTAssertEqual("1, 2, 3".asInts(), [1, 2, 3])
+    @Test func testInts() throws {
+        #expect("1,2,3".asInts() == [1, 2, 3])
+        #expect("1, 2, 3".asInts() == [1, 2, 3])
     }
 
-    func testTokenized() throws {
-        XCTAssertEqual("1;2;3".tokenized(separator: ";"), ["1", "2", "3"])
-        XCTAssertEqual("1 - 2 - 3".tokenized(separator: "-"), ["1", "2", "3"])
+    @Test func testTokenized() throws {
+        #expect("1;2;3".tokenized(separator: ";") == ["1", "2", "3"])
+        #expect("1 - 2 - 3".tokenized(separator: "-") == ["1", "2", "3"])
     }
 
-    func testAllInt() throws {
-        XCTAssertEqual("1,2,3".allInts(), [1, 2, 3])
-        XCTAssertEqual("1 red -2 blue 3green".allInts(), [1, -2, 3])
-        XCTAssertEqual("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts(), [1, 1, 2, 3, 4])
+    @Test func testAllInt() throws {
+        #expect("1,2,3".allInts() == [1, 2, 3])
+        #expect("1 red -2 blue 3green".allInts() == [1, -2, 3])
+        #expect("Game 1: 1 red, 2 bluem 3 green; 4 yellow".allInts() == [1, 1, 2, 3, 4])
     }
 
-    func testLines() throws {
-        XCTAssertEqual("foo\nbar".lines, ["foo", "bar"])
-        XCTAssertEqual("foo\n\nbar".lines, ["foo", "", "bar"])
-        XCTAssertEqual("\nfoo\n\nbar\n ".lines, ["", "foo", "", "bar", " "])
+    @Test func testLines() throws {
+        #expect("foo\nbar".lines == ["foo", "bar"])
+        #expect("foo\n\nbar".lines == ["foo", "", "bar"])
+        #expect("\nfoo\n\nbar\n ".lines == ["", "foo", "", "bar", " "])
     }
 
-    func testGrouped() throws {
-        XCTAssertEqual("foo\n\nbar".lines.grouped(by: { $0.isEmpty }), [["foo"], ["bar"]])
-        XCTAssertEqual("foo\nbar\n\nbar\nfoo".lines.grouped(by: { $0.isEmpty }), [["foo", "bar"], ["bar", "foo"]])
-        XCTAssertEqual("foo\n\n\nbar".lines.grouped(by: { $0.isEmpty }), [["foo"], [], ["bar"]])
-        XCTAssertEqual("foo\n\nbar\n\nbaz\n".lines.grouped(by: { $0.isEmpty }), [["foo"], ["bar"], ["baz"]])
+    @Test func testGrouped() throws {
+        #expect("foo\n\nbar".lines.grouped(by: { $0.isEmpty }) == [["foo"], ["bar"]])
+        #expect("foo\nbar\n\nbar\nfoo".lines.grouped(by: { $0.isEmpty }) == [["foo", "bar"], ["bar", "foo"]])
+        #expect("foo\n\n\nbar".lines.grouped(by: { $0.isEmpty }) == [["foo"], [], ["bar"]])
+        #expect("foo\n\nbar\n\nbaz\n".lines.grouped(by: { $0.isEmpty }) == [["foo"], ["bar"], ["baz"]])
     }
 }

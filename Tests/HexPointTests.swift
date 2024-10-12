@@ -4,73 +4,74 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-class HexPointTests: XCTestCase {
+@Suite
+struct HexPointTests {
 
-    func testPoint() throws {
+    @Test func testPoint() throws {
         let zero = Hex.Point.zero
-        XCTAssertEqual(zero.q, 0)
-        XCTAssertEqual(zero.r, 0)
-        XCTAssertEqual(zero.s, 0)
+        #expect(zero.q == 0)
+        #expect(zero.r == 0)
+        #expect(zero.s == 0)
 
         let one = Hex.Point(1, 1, 1)
-        XCTAssertEqual(one.q, 1)
-        XCTAssertEqual(one.r, 1)
-        XCTAssertEqual(one.s, 1)
+        #expect(one.q == 1)
+        #expect(one.r == 1)
+        #expect(one.s == 1)
 
         let sum = zero + one
-        XCTAssertEqual(sum, one)
+        #expect(sum == one)
 
         let two = one + one
-        XCTAssertEqual(two.q, 2)
-        XCTAssertEqual(two.r, 2)
-        XCTAssertEqual(two.s, 2)
+        #expect(two.q == 2)
+        #expect(two.r == 2)
+        #expect(two.s == 2)
     }
 
-    func testDistance() throws {
-        XCTAssertEqual(Hex.Point.zero.distance(to: .zero), 0)
+    @Test func testDistance() throws {
+        #expect(Hex.Point.zero.distance(to: .zero) == 0)
 
-        XCTAssertEqual(Hex.Point(1, 1, 0).distance(), 1)
-        XCTAssertEqual(Hex.Point(1, 0, 1).distance(), 1)
-        XCTAssertEqual(Hex.Point(0, 1, 1).distance(), 1)
+        #expect(Hex.Point(1, 1, 0).distance() == 1)
+        #expect(Hex.Point(1, 0, 1).distance() == 1)
+        #expect(Hex.Point(0, 1, 1).distance() == 1)
     }
 
-    func testNeighbors() throws {
+    @Test func testNeighbors() throws {
         let zero = Hex.Point.zero
-        XCTAssertEqual(zero.neighbors(orientation: .pointy).count, 6)
-        XCTAssertEqual(zero.neighbors(orientation: .flat).count, 6)
+        #expect(zero.neighbors(orientation: .pointy).count == 6)
+        #expect(zero.neighbors(orientation: .flat).count == 6)
 
         for n in zero.neighbors(orientation: .pointy) {
-            XCTAssertEqual(n.distance(to: .zero), 1)
+            #expect(n.distance(to: .zero) == 1)
             let m = zero + n + n
-            XCTAssertEqual(m.distance(to: .zero), 2)
+            #expect(m.distance(to: .zero) == 2)
         }
 
         for n in zero.neighbors(orientation: .flat) {
-            XCTAssertEqual(n.distance(to: .zero), 1)
+            #expect(n.distance(to: .zero) == 1)
             let m = zero + n + n
-            XCTAssertEqual(m.distance(to: .zero), 2)
+            #expect(m.distance(to: .zero) == 2)
         }
     }
 
-    func testOppositeDirection() throws {
+    @Test func testOppositeDirection() throws {
         let zero = Hex.Point.zero
 
         for direction in Hex.PointyDirection.allCases {
-            XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
+            #expect(zero + direction.offset + direction.opposite.offset == zero)
         }
         for direction in Hex.FlatDirection.allCases {
-            XCTAssertEqual(zero + direction.offset + direction.opposite.offset, zero)
+            #expect(zero + direction.offset + direction.opposite.offset == zero)
         }
     }
 
-    func testTurns() throws {
-        XCTAssertEqual(Set(Hex.FlatDirection.allCases.map { $0.turned(.clockwise) }).count, Hex.FlatDirection.allCases.count)
-        XCTAssertEqual(Set(Hex.FlatDirection.allCases.map { $0.turned(.counterclockwise) }).count, Hex.FlatDirection.allCases.count)
-        XCTAssertEqual(Set(Hex.PointyDirection.allCases.map { $0.turned(.clockwise) }).count, Hex.PointyDirection.allCases.count)
-        XCTAssertEqual(Set(Hex.PointyDirection.allCases.map { $0.turned(.counterclockwise) }).count, Hex.PointyDirection.allCases.count)
+    @Test func testTurns() throws {
+        #expect(Set(Hex.FlatDirection.allCases.map { $0.turned(.clockwise) }).count == Hex.FlatDirection.allCases.count)
+        #expect(Set(Hex.FlatDirection.allCases.map { $0.turned(.counterclockwise) }).count == Hex.FlatDirection.allCases.count)
+        #expect(Set(Hex.PointyDirection.allCases.map { $0.turned(.clockwise) }).count == Hex.PointyDirection.allCases.count)
+        #expect(Set(Hex.PointyDirection.allCases.map { $0.turned(.counterclockwise) }).count == Hex.PointyDirection.allCases.count)
     }
 
 }

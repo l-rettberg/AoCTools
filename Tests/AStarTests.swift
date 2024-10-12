@@ -4,10 +4,11 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-class AStarTests: XCTestCase {
+@Suite
+struct AStarTests {
     struct Map: Pathfinding {
         let grid: Grid<Bool>
         let adjacency: Point.Adjacency
@@ -41,7 +42,7 @@ class AStarTests: XCTestCase {
         }
     }
 
-    func testPathfinding() throws {
+    @Test func testPathfinding() throws {
         let map = Map([
             "..........",
             "..........",
@@ -53,13 +54,13 @@ class AStarTests: XCTestCase {
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
-        XCTAssertEqual(path.count, 13)
-        XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(9, 4)))
-        XCTAssertTrue(path.contains(Point(9, 2)))
+        #expect(path.count == 13)
+        #expect(!path.contains(.zero))
+        #expect(path.contains(Point(9, 4)))
+        #expect(path.contains(Point(9, 2)))
     }
 
-    func testPathfindingDiagonal() throws {
+    @Test func testPathfindingDiagonal() throws {
         let map = Map([
             "...........",
             "...........",
@@ -71,19 +72,19 @@ class AStarTests: XCTestCase {
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(10, 4))
 
-        XCTAssertEqual(path.count, 12)
-        XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(1, 1)))
-        XCTAssertTrue(path.contains(Point(2, 0)))
-        XCTAssertTrue(path.contains(Point(9, 3)))
-        XCTAssertTrue(path.contains(Point(10, 2)))
-        XCTAssertTrue(path.contains(Point(10, 4)))
+        #expect(path.count == 12)
+        #expect(!path.contains(.zero))
+        #expect(path.contains(Point(1, 1)))
+        #expect(path.contains(Point(2, 0)))
+        #expect(path.contains(Point(9, 3)))
+        #expect(path.contains(Point(10, 2)))
+        #expect(path.contains(Point(10, 4)))
 
-        XCTAssertFalse(path.contains(Point(1, 0)))
-        XCTAssertFalse(path.contains(Point(0, 1)))
+        #expect(!path.contains(Point(1, 0)))
+        #expect(!path.contains(Point(0, 1)))
     }
 
-    func testPathfindingSnake() throws {
+    @Test func testPathfindingSnake() throws {
         let map = Map([
             "..........",
             "#########.",
@@ -95,14 +96,14 @@ class AStarTests: XCTestCase {
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
-        XCTAssertEqual(path.count, 31)
-        XCTAssertFalse(path.contains(.zero))
-        XCTAssertTrue(path.contains(Point(9, 4)))
-        XCTAssertTrue(path.contains(Point(9, 2)))
-        XCTAssertTrue(path.contains(Point(0, 3)))
+        #expect(path.count == 31)
+        #expect(!path.contains(.zero))
+        #expect(path.contains(Point(9, 4)))
+        #expect(path.contains(Point(9, 2)))
+        #expect(path.contains(Point(0, 3)))
     }
 
-    func testPathfindingBlocked() throws {
+    @Test func testPathfindingBlocked() throws {
         let map = Map([
             "..........",
             "..........",
@@ -114,6 +115,6 @@ class AStarTests: XCTestCase {
         let pathfinder = AStarPathfinder(map: map)
         let path = pathfinder.shortestPath(from: .zero, to: Point(9, 4))
 
-        XCTAssertEqual(path.count, 0)
+        #expect(path.isEmpty)
     }
 }

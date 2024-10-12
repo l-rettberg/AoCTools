@@ -4,38 +4,38 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-final class SetTests: XCTestCase {
-
-    func testAdd() throws {
+@Suite
+struct SetTests {
+    @Test func testAdd() throws {
         let s1 = Set([1, 2])
         let s2 = Set([3, 4])
-        XCTAssertEqual(s1 + s2, Set([1, 2, 3, 4]))
+        #expect(s1 + s2 == Set([1, 2, 3, 4]))
 
-        XCTAssertEqual(s1 + 4, Set([1, 2, 4]))
+        #expect(s1 + 4 == Set([1, 2, 4]))
     }
 
-    func testSubtract() throws {
+    @Test func testSubtract() throws {
         let s1 = Set([1, 2, 3, 4])
         let s2 = Set([3, 4])
-        XCTAssertEqual(s1 - s2, Set([1, 2]))
+        #expect(s1 - s2 == Set([1, 2]))
 
-        XCTAssertEqual(s1 - 4, Set([1, 2, 3]))
+        #expect(s1 - 4 == Set([1, 2, 3]))
     }
 
-    func testCombinations() throws {
+    @Test func testCombinations() throws {
         let s1 = Set([1, 2, 3])
         let combinations = s1.combinations()
-        XCTAssertEqual(combinations.count, 7)
+        #expect(combinations.count == 7)
 
-        XCTAssertTrue(combinations.contains([1]))
-        XCTAssertTrue(combinations.contains([2]))
-        XCTAssertTrue(combinations.contains([3]))
-        XCTAssertTrue(combinations.contains([1, 2]))
-        XCTAssertTrue(combinations.contains([1, 3]))
-        XCTAssertTrue(combinations.contains([2, 3]))
-        XCTAssertTrue(combinations.contains([1, 2, 3]))
+        #expect(combinations.contains([1]))
+        #expect(combinations.contains([2]))
+        #expect(combinations.contains([3]))
+        #expect(combinations.contains([1, 2]))
+        #expect(combinations.contains([1, 3]))
+        #expect(combinations.contains([2, 3]))
+        #expect(combinations.contains([1, 2, 3]))
     }
 }

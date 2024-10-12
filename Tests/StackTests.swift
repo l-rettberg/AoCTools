@@ -4,29 +4,31 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-class StackTests: XCTestCase {
-    func testStack() throws {
+@Suite
+struct StackTests {
+    @Test func testStack() throws {
         var stack = Stack<Int>()
 
-        XCTAssertEqual(stack.count, 0)
-        XCTAssertTrue(stack.isEmpty)
+        // swiftlint:disable:next empty_count
+        #expect(stack.count == 0)
+        #expect(stack.isEmpty)
 
         stack.push(1)
         stack.push(2)
-        XCTAssertEqual(stack.count, 2)
-        XCTAssertFalse(stack.isEmpty)
+        #expect(stack.count == 2)
+        #expect(!stack.isEmpty)
 
-        XCTAssertEqual(stack.peek(), 2)
+        #expect(stack.peek() == 2)
 
-        XCTAssertEqual(stack.pop(), 2)
-        XCTAssertEqual(stack.count, 1)
+        #expect(stack.pop() == 2)
+        #expect(stack.count == 1)
 
-        XCTAssertEqual(stack.pop(), 1)
-        XCTAssertEqual(stack.count, 0)
+        #expect(stack.pop() == 1)
+        #expect(stack.isEmpty)
 
-        XCTAssertNil(stack.peek())
+        #expect(stack.peek() == nil)
     }
 }

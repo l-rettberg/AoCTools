@@ -4,46 +4,47 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-class TreeTests: XCTestCase {
+@Suite
+struct TreeTests {
 
-    func testTreeNodes() {
+    @Test func testTreeNodes() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
         node2.add(node3)
         node1.add(node2)
-        XCTAssertEqual(node1.parent, nil)
-        XCTAssertEqual(node2.parent, node1)
-        XCTAssertEqual(node3.parent, node2)
+        #expect(node1.parent == nil)
+        #expect(node2.parent == node1)
+        #expect(node3.parent == node2)
     }
 
-    func testTreeNodes2() {
+    @Test func testTreeNodes2() {
         let node3 = TreeNode(3)
         let node2 = TreeNode(2, children: [node3])
         let node1 = TreeNode(1, children: [node2])
-        XCTAssertEqual(node1.parent, nil)
-        XCTAssertEqual(node2.parent, node1)
-        XCTAssertEqual(node3.parent, node2)
+        #expect(node1.parent == nil)
+        #expect(node2.parent == node1)
+        #expect(node3.parent == node2)
     }
 
-    func testTreeCount() {
+    @Test func testTreeCount() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
         node2.add(node3)
         node1.add(node2)
-        XCTAssertEqual(node1.count, 3)
-        XCTAssertEqual(node2.count, 2)
-        XCTAssertEqual(node3.count, 1)
+        #expect(node1.count == 3)
+        #expect(node2.count == 2)
+        #expect(node3.count == 1)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.count, 3)
+        #expect(tree.count == 3)
     }
 
-    func testTreeVisit() {
+    @Test func testTreeVisit() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -54,10 +55,10 @@ class TreeTests: XCTestCase {
         node1.visitAll { node, _ in
             visits.append(node.value)
         }
-        XCTAssertEqual(visits, [1, 2, 3])
+        #expect(visits == [1, 2, 3])
     }
 
-    func testTreeVisit2() {
+    @Test func testTreeVisit2() {
         let node2 = TreeNode(2, children: [TreeNode(3), TreeNode(4)])
         let node1 = TreeNode(1, children: [node2])
 
@@ -65,10 +66,10 @@ class TreeTests: XCTestCase {
         node1.visitAll { node, level in
             visits.append(node.value * level)
         }
-        XCTAssertEqual(visits, [0, 2, 6, 8])
+        #expect(visits == [0, 2, 6, 8])
     }
 
-    func testTreeVisit3() {
+    @Test func testTreeVisit3() {
         let node3 = TreeNode(3, children: [TreeNode(6), TreeNode(7)])
         let node2 = TreeNode(2, children: [TreeNode(4), TreeNode(5)])
         let node1 = TreeNode(1, children: [node2, node3])
@@ -78,20 +79,20 @@ class TreeTests: XCTestCase {
             visits.append(node.value)
         }
 
-        XCTAssertEqual(visits, [1, 2, 4, 5, 3, 6, 7]) // DFS
+        #expect(visits == [1, 2, 4, 5, 3, 6, 7]) // DFS
     }
 
-    func testTreeBFS() {
+    @Test func testTreeBFS() {
         let node3 = TreeNode(3, children: [TreeNode(6), TreeNode(7)])
         let node2 = TreeNode(2, children: [TreeNode(4), TreeNode(5)])
         let node1 = TreeNode(1, children: [node2, node3])
 
         let bfs = node1.breadthFirstSearchAll { _ in true }
         let values = bfs.map { $0.value }
-        XCTAssertEqual(values, [1, 2, 3, 4, 5, 6, 7]) // BFS
+        #expect(values == [1, 2, 3, 4, 5, 6, 7]) // BFS
     }
 
-    func testTreeReduce() {
+    @Test func testTreeReduce() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -101,13 +102,13 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         let sum = node1.reduce(0, +)
-        XCTAssertEqual(sum, 10)
+        #expect(sum == 10)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.reduce(0, +), 10)
+        #expect(tree.reduce(0, +) == 10)
     }
 
-    func testTreeReduceInto() {
+    @Test func testTreeReduceInto() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -117,13 +118,13 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         let sum = node1.reduce(into: 0, +=)
-        XCTAssertEqual(sum, 10)
+        #expect(sum == 10)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.reduce(into: 0, +=), 10)
+        #expect(tree.reduce(into: 0, +=) == 10)
     }
 
-    func testTreeFind() {
+    @Test func testTreeFind() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -134,12 +135,12 @@ class TreeTests: XCTestCase {
         node1.add(node2)
         node1.add(node5)
 
-        XCTAssertEqual(node1.first { $0 == 1}, node1)
-        XCTAssertEqual(node1.first { $0 == 4}, node4)
-        XCTAssertEqual(node1.first { $0 == 99}, nil)
+        #expect(node1.first { $0 == 1} == node1)
+        #expect(node1.first { $0 == 4} == node4)
+        #expect(node1.first { $0 == 99} == nil)
     }
 
-    func testTreeFindIterative() {
+    @Test func testTreeFindIterative() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -150,12 +151,12 @@ class TreeTests: XCTestCase {
         node1.add(node2)
         node1.add(node5)
 
-        XCTAssertEqual(node1.firstIterative { $0 == 1}, node1)
-        XCTAssertEqual(node1.firstIterative { $0 == 4}, node4)
-        XCTAssertEqual(node1.firstIterative { $0 == 99}, nil)
+        #expect(node1.firstIterative { $0 == 1} == node1)
+        #expect(node1.firstIterative { $0 == 4} == node4)
+        #expect(node1.firstIterative { $0 == 99} == nil)
     }
 
-    func testTreeFilter() {
+    @Test func testTreeFilter() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -166,12 +167,12 @@ class TreeTests: XCTestCase {
         node1.add(node2)
         node1.add(node5)
 
-        XCTAssertEqual(node1.filter { $0 == 1}, [node1, node5])
-        XCTAssertEqual(node1.filter { $0 == 4}, [node4])
-        XCTAssertEqual(node1.filter { $0 == 99}, [])
+        #expect(node1.filter { $0 == 1} == [node1, node5])
+        #expect(node1.filter { $0 == 4} == [node4])
+        #expect(node1.filter { $0 == 99}.isEmpty)
     }
 
-    func testTreeFilterIterative() {
+    @Test func testTreeFilterIterative() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -182,12 +183,12 @@ class TreeTests: XCTestCase {
         node1.add(node2)
         node1.add(node5)
 
-        XCTAssertEqual(node1.filterIterative { $0 == 1}, [node1, node5])
-        XCTAssertEqual(node1.filterIterative { $0 == 4}, [node4])
-        XCTAssertEqual(node1.filterIterative { $0 == 99}, [])
+        #expect(node1.filterIterative { $0 == 1} == [node1, node5])
+        #expect(node1.filterIterative { $0 == 4} == [node4])
+        #expect(node1.filterIterative { $0 == 99}.isEmpty)
     }
 
-    func testTreeDelete() {
+    @Test func testTreeDelete() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -198,22 +199,22 @@ class TreeTests: XCTestCase {
         node1.add(node2)
         node1.add(node5)
 
-        XCTAssertEqual(node1.count, 5)
-        XCTAssertEqual(node5.parent, node1)
+        #expect(node1.count == 5)
+        #expect(node5.parent == node1)
         node5.delete()
-        XCTAssertEqual(node5.parent, nil)
-        XCTAssertEqual(node1.count, 4)
+        #expect(node5.parent == nil)
+        #expect(node1.count == 4)
 
         node5.delete()
-        XCTAssertEqual(node1.count, 4)
+        #expect(node1.count == 4)
 
         node2.delete()
-        XCTAssertEqual(node1.count, 1)
+        #expect(node1.count == 1)
 
-        XCTAssertEqual(node2.count, 3)
+        #expect(node2.count == 3)
     }
 
-    func testTreeLevel() {
+    @Test func testTreeLevel() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -225,15 +226,15 @@ class TreeTests: XCTestCase {
         node1.add(node5)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.level(of: 1), 0)
-        XCTAssertEqual(tree.level(of: 2), 1)
-        XCTAssertEqual(tree.level(of: 3), 2)
-        XCTAssertEqual(tree.level(of: 4), 2)
-        XCTAssertEqual(tree.level(of: 5), 1)
-        XCTAssertEqual(tree.level(of: 6), nil)
+        #expect(tree.level(of: 1) == 0)
+        #expect(tree.level(of: 2) == 1)
+        #expect(tree.level(of: 3) == 2)
+        #expect(tree.level(of: 4) == 2)
+        #expect(tree.level(of: 5) == 1)
+        #expect(tree.level(of: 6) == nil)
     }
 
-    func testTreeCommonAncestor() {
+    @Test func testTreeCommonAncestor() {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
@@ -245,10 +246,10 @@ class TreeTests: XCTestCase {
         node1.add(node2)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.lowestCommonAncestor(of: 3, and: 5), node3)
+        #expect(tree.lowestCommonAncestor(of: 3, and: 5) == node3)
     }
 
-    func testTreeCommonAncestor2() {
+    @Test func testTreeCommonAncestor2() {
         let node1 = TreeNode("A")
         let node2 = TreeNode("B")
         let node3 = TreeNode("C")
@@ -265,6 +266,6 @@ class TreeTests: XCTestCase {
         node2.add(node6)
 
         let tree = Tree(root: node1)
-        XCTAssertEqual(tree.lowestCommonAncestor(of: "E", and: "G"), node2)
+        #expect(tree.lowestCommonAncestor(of: "E", and: "G") == node2)
     }
 }

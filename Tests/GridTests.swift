@@ -4,12 +4,12 @@
 //  Advent of Code tools
 //
 
-import XCTest
+import Testing
 import AoCTools
 
-final class GridTests: XCTestCase {
-
-    func testParseBool() throws {
+@Suite
+struct GridTests {
+    @Test func testParseBool() throws {
         let input = """
             ###
             #.#
@@ -17,18 +17,18 @@ final class GridTests: XCTestCase {
             """
         let grid = Grid<Bool>.parse(input)
 
-        XCTAssertEqual(grid.points.count { !$0.value }, 1)
-        XCTAssertEqual(grid.points.count { $0.value }, 8)
-        XCTAssertEqual(grid.minX, 0)
-        XCTAssertEqual(grid.maxX, 2)
-        XCTAssertEqual(grid.minY, 0)
-        XCTAssertEqual(grid.maxY, 2)
+        #expect(grid.points.count { !$0.value } == 1)
+        #expect(grid.points.count { $0.value } == 8)
+        #expect(grid.minX == 0)
+        #expect(grid.maxX == 2)
+        #expect(grid.minY == 0)
+        #expect(grid.maxY == 2)
 
         let s = grid.points.draw(xRange: grid.xRange, yRange: grid.yRange)
-        XCTAssertEqual(s.joined(separator: "\n"), input)
+        #expect(s.joined(separator: "\n") == input)
     }
 
-    func testParseCustom() throws {
+    @Test func testParseCustom() throws {
         enum Tile: Character, Drawable {
             case wall = "#"
             case floor = "."
@@ -42,19 +42,19 @@ final class GridTests: XCTestCase {
             """
         let grid = Grid<Tile>.parse(input)
 
-        XCTAssertEqual(grid.points.count { $0.value == .floor }, 1)
-        XCTAssertEqual(grid.points.count { $0.value == .wall }, 6)
-        XCTAssertEqual(grid.points.count { $0.value == .door }, 2)
-        XCTAssertEqual(grid.minX, 0)
-        XCTAssertEqual(grid.maxX, 2)
-        XCTAssertEqual(grid.minY, 0)
-        XCTAssertEqual(grid.maxY, 2)
+        #expect(grid.points.count { $0.value == .floor } == 1)
+        #expect(grid.points.count { $0.value == .wall } == 6)
+        #expect(grid.points.count { $0.value == .door } == 2)
+        #expect(grid.minX == 0)
+        #expect(grid.maxX == 2)
+        #expect(grid.minY == 0)
+        #expect(grid.maxY == 2)
 
         let s = grid.points.draw(xRange: grid.xRange, yRange: grid.yRange)
-        XCTAssertEqual(s.joined(separator: "\n"), input)
+        #expect(s.joined(separator: "\n") == input)
     }
 
-    func testGridNotAtOrigin() throws {
+    @Test func testGridNotAtOrigin() throws {
         let input = """
             ###
             #.#
@@ -66,16 +66,16 @@ final class GridTests: XCTestCase {
         let offsetGrid = Dictionary(uniqueKeysWithValues: grid1.points.map { ($0.key + offset, $0.value) })
 
         let grid = Grid(points: offsetGrid)
-        XCTAssertEqual(grid.minX, 5)
-        XCTAssertEqual(grid.maxX, 7)
-        XCTAssertEqual(grid.minY, 5)
-        XCTAssertEqual(grid.maxY, 7)
+        #expect(grid.minX == 5)
+        #expect(grid.maxX == 7)
+        #expect(grid.minY == 5)
+        #expect(grid.maxY == 7)
 
         let s = grid.points.draw(xRange: grid.xRange, yRange: grid.yRange)
-        XCTAssertEqual(s.joined(separator: "\n"), input)
+        #expect(s.joined(separator: "\n") == input)
     }
 
-    func testGridSparse() throws {
+    @Test func testGridSparse() throws {
         let input = """
             ###
             ...
@@ -89,14 +89,14 @@ final class GridTests: XCTestCase {
 
         let grid = Grid(points: points)
 
-        XCTAssertEqual(grid.points.count { !$0.value }, 0)
-        XCTAssertEqual(grid.points.count { $0.value }, 6)
-        XCTAssertEqual(grid.minX, 0)
-        XCTAssertEqual(grid.maxX, 2)
-        XCTAssertEqual(grid.minY, 0)
-        XCTAssertEqual(grid.maxY, 2)
+        #expect(grid.points.count { !$0.value } == 0)
+        #expect(grid.points.count { $0.value } == 6)
+        #expect(grid.minX == 0)
+        #expect(grid.maxX == 2)
+        #expect(grid.minY == 0)
+        #expect(grid.maxY == 2)
 
         let s = grid.points.draw(xRange: grid.xRange, yRange: grid.yRange)
-        XCTAssertEqual(s.joined(separator: "\n"), input)
+        #expect(s.joined(separator: "\n") == input)
     }
 }
