@@ -13,6 +13,7 @@ public protocol Runnable {
 
 public protocol AOCDay: Runnable {
     var day: String { get }
+    var title: String { get }
 
     associatedtype Solution1
     func part1() -> Solution1
@@ -24,6 +25,7 @@ public protocol AOCDay: Runnable {
 extension AOCDay {
     public static var input: String { "" }
     public var day: String { String("\(Self.self)".suffix(2)) }
+    public var title: String { "" }
 
     public func run() {
         run(part: 1, part1)
@@ -31,9 +33,10 @@ extension AOCDay {
     }
 
     private func run<T>(part: Int, _ fun: () -> T) {
-        let timer = Timer(day, fun: "part \(part)")
+        let title = title.isEmpty ? "" : "'\(title)' "
+        let timer = Timer(day, fun: "\(title)part \(part)")
         let solution = fun()
         timer.show()
-        print("Solution for day \(day) part \(part): \(solution)")
+        print("Solution for day \(day) \(title)part \(part): \(solution)")
     }
 }
