@@ -17,19 +17,6 @@ extension Sequence {
 }
 
 extension Sequence where Element: Comparable {
-    public func minAndMax() -> (Element, Element)? {
-        var iter = makeIterator()
-        guard let first = iter.next() else { return nil }
-
-        var min = first
-        var max = first
-        while let value = iter.next() {
-            if value < min { min = value }
-            if value > max { max = value }
-        }
-        return (min, max)
-    }
-
     public func minAndMax<Value: Comparable>(of keyPath: KeyPath<Element, Value>) -> (Value, Value)? {
         var iter = makeIterator()
         guard let first = iter.next() else { return nil }
