@@ -106,51 +106,58 @@ extension Point3 {
 
 // MARK: - neighbors
 extension Point3 {
-    public enum Adjacency {
-        case orthogonal, diagonal, all
+    public enum Adjacency: Sendable {
+        case cardinal
+        case ordinal
+        case all
+
+        public static let orthogonal = Adjacency.cardinal
+        public static let diagonal = Adjacency.ordinal
     }
 
     // swiftlint:disable comma
-    private static let orthogonalOffsets = [
-        Point3(-1,  0,  0),
-        Point3( 0, -1,  0),
-        Point3( 0,  1,  0),
+    private static let cardinalOffsets = [
         Point3( 1,  0,  0),
-        Point3( 0,  0, -1),
-        Point3( 0,  0,  1)
+        Point3(-1,  0,  0),
+        Point3( 0,  1,  0),
+        Point3( 0, -1,  0),
+        Point3( 0,  0,  1),
+        Point3( 0,  0, -1)
     ]
 
-    private static let diagonalOffsets = [
-        Point3( 1,  1,  0),
-        Point3( 1, -1,  0),
-        Point3(-1,  1,  0),
-        Point3(-1, -1,  0),
-        Point3(-1, -1, -1),
-        Point3(-1, -1,  1),
-        Point3(-1,  0, -1),
-        Point3(-1,  0,  1),
-        Point3(-1,  1, -1),
-        Point3(-1,  1,  1),
-        Point3( 0, -1, -1),
-        Point3( 0, -1,  1),
-        Point3( 0,  1, -1),
-        Point3( 0,  1,  1),
-        Point3( 1, -1, -1),
-        Point3( 1, -1,  1),
-        Point3( 1,  0, -1),
+    private static let ordinalOffsets = [
         Point3( 1,  0,  1),
+        Point3( 1,  0, -1),
+        Point3( 1,  1,  0),
+        Point3( 1,  1,  1),
         Point3( 1,  1, -1),
-        Point3( 1,  1,  1)
+        Point3( 1, -1,  0),
+        Point3( 1, -1,  1),
+        Point3( 1, -1, -1),
+
+        Point3(-1,  0,  1),
+        Point3(-1,  0, -1),
+        Point3(-1,  1,  0),
+        Point3(-1,  1,  1),
+        Point3(-1,  1, -1),
+        Point3(-1, -1,  0),
+        Point3(-1, -1,  1),
+        Point3(-1, -1, -1),
+
+        Point3( 0,  1,  1),
+        Point3( 0,  1, -1),
+        Point3( 0, -1,  1),
+        Point3( 0, -1, -1)
     ]
     // swiftlint:enable comma
 
-    private static let allOffsets = Self.orthogonalOffsets + Self.diagonalOffsets
+    private static let allOffsets = Self.cardinalOffsets + Self.ordinalOffsets
 
-    public func neighbors(adjacency: Adjacency = .orthogonal) -> [Point3] {
+    public func neighbors(adjacency: Adjacency = .cardinal) -> [Point3] {
         let offsets: [Point3]
         switch adjacency {
-        case .orthogonal: offsets = Self.orthogonalOffsets
-        case .diagonal: offsets = Self.diagonalOffsets
+        case .cardinal: offsets = Self.cardinalOffsets
+        case .ordinal: offsets = Self.ordinalOffsets
         case .all: offsets = Self.allOffsets
         }
 
