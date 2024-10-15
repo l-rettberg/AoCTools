@@ -9,7 +9,6 @@ let package = Package(
         .library(name: "AoCTools", targets: ["AoCTools"])
     ],
     dependencies: [
-        .package(url: "https://github.com/lukepistrol/SwiftLintPlugin", from: "0.55.1"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.1.1"),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0")
     ],
@@ -20,17 +19,12 @@ let package = Package(
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
-            path: "Sources",
-            plugins: [
-                .plugin(name: "SwiftLint", package: "SwiftLintPlugin")
-            ]
+            path: "Sources"
         ),
         .testTarget(
             name: "AoCToolsTests",
             dependencies: ["AoCTools"],
-            path: "Tests",
-            plugins: [
-                .plugin(name: "SwiftLint", package: "SwiftLintPlugin")
+            path: "Tests"
             ]
         )
     ]
